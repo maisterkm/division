@@ -4,69 +4,61 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Divider {
+    public Result result = new Result();
     private int indexDigitsOfDividend = 0;
-    private Result result;
+    private int indexOfZeroInQuotient = 0;
+    private boolean shiftDigit = false;
     private int dividend;
     private int divisor;
     
     private ArrayList<Integer> digitsOfDividend = new ArrayList<Integer>();
     private ArrayList<Integer> partialDividend = new ArrayList<Integer>();
-    private ArrayList<Integer> digitsOfQuotient = new ArrayList<Integer>();
-    private ArrayList<Integer> product = new ArrayList<Integer>();
-    private ArrayList<Integer> integralPartialDividend = new ArrayList<Integer>();
-    private ArrayList<Integer> remainder = new ArrayList<Integer>();
-    
-    
-    private class Step {
-        private int stepDigitsOfQuotient;
-        private int stepProduct;
-        private int stepIntegralPartialDividend;
-        private int stepRemainder;
-        
-        public void sendDataToResult(int i) {
-            
-        }
-        
-        public void getDataFromResult(int i) {}
-    }
     
     public Result divide(int dividend, int divisor) {
-        Result result = new Result();
-        Step step = new Step();
         this.dividend = dividend;
         this.divisor = divisor;
-//        result.setDividend(dividend);
-//        result.setDivisor(divisor);
+        result.setDividend(dividend);
+        result.setDivisor(divisor);
         int i = 0;
         splitDividendIntoDigits(dividend);
         findFirstPartialDividend(i);
         indexDigitsOfDividend = countDigitsInArray(partialDividend);
-        //step.stepDigitsOfQuotient = div(partialDividend.get(i), divisor);
-        digitsOfQuotient.add(div(partialDividend.get(i), divisor));
-        //step.stepProduct = multiply(digitsOfQuotient.get(i), divisor);
-        product.add(multiply(digitsOfQuotient.get(i), divisor));
-        //step.stepRemainder = partialDividend.get(i) - product.get(i);
-        remainder.add(partialDividend.get(i) - product.get(i));
+        result.digitsOfQuotient.add(div(partialDividend.get(i), divisor)); 
+        result.product.add(multiply(result.digitsOfQuotient.get(i), divisor)); 
+        result.remainder.add(partialDividend.get(i) - result.product.get(i)); 
         if(indexDigitsOfDividend < digitsOfDividend.size()) {
-            //step.stepIntegralPartialDividend = findIntegralPartialDividend(i);
-            integralPartialDividend.add(findIntegralPartialDividend(i));
+            result.integralPartialDividend.add(findIntegralPartialDividend(i)); 
+        } else if(indexDigitsOfDividend == digitsOfDividend.size() && shiftDigit == false) { 
+            return result; 
+        }else if(indexDigitsOfDividend == digitsOfDividend.size() && shiftDigit == true && result.integralPartialDividend.get(i) >= divisor) {
+            result.digitsOfQuotient.add(div(result.integralPartialDividend.get(i), divisor));
+            result.product.add(multiply(result.digitsOfQuotient.get(i), divisor)); 
+            result.remainder.add(partialDividend.get(i) - result.product.get(i));
+            return result;
+        } else if(indexDigitsOfDividend == digitsOfDividend.size() && shiftDigit == true && result.integralPartialDividend.get(i) < divisor) {
+            return result;
         }
-        step.sendDataToResult(i);
-        while(indexDigitsOfDividend < digitsOfDividend.size()) {
-            digitsOfQuotient.add(div(integralPartialDividend.get(i), divisor));
-            i++;
-            product.add(multiply(digitsOfQuotient.get(i), divisor));
-            remainder.add(integralPartialDividend.get(i-1) - product.get(i));
-            integralPartialDividend.add(findIntegralPartialDividend(i));
+        while(indexDigitsOfDividend <= digitsOfDividend.size()) {
+            if (result.integralPartialDividend.get(i) < divisor) { break; }
+            result.digitsOfQuotient.add(div(result.integralPartialDividend.get(i), divisor));
+            if (countDigitsInIntegralPartialDividend(i) - countDigitsInRemainder(i) > 1 && result.remainder.get(i) != 0) { indexOfZeroInQuotient = i+1; } 
+                i++;
+                if (result.digitsOfQuotient.get(i) == 0) {
+                    result.product.add(multiply(result.digitsOfQuotient.get(i+1), divisor));
+                } else { result.product.add(multiply(result.digitsOfQuotient.get(i), divisor)); }
+                result.remainder.add(result.integralPartialDividend.get(i - 1) - result.product.get(i));
+            if(indexDigitsOfDividend < digitsOfDividend.size()) {
+                result.integralPartialDividend.add(findIntegralPartialDividend(i)); 
+            } else { indexDigitsOfDividend++; }
         }
-        
+        if(indexOfZeroInQuotient != 0) { result.digitsOfQuotient.add(indexOfZeroInQuotient, 0); }
         return result;
     }
     
     private void findFirstPartialDividend(int i) {
         String tempDividendString = "";
         int tempDividendInt; 
-        if(i == 0) { // Looking for the first value for ArrayList<Integer> partialDividend
+        if(i == 0) {    // Looking for the first value for ArrayList<Integer> partialDividend
             if (div(digitsOfDividend.get(i), divisor) > 0 || digitsOfDividend.get(i) == 0) {
                 partialDividend.add(digitsOfDividend.get(i));
             } else {
@@ -86,10 +78,9 @@ public class Divider {
         }
     }
     
-    private ArrayList<Integer> splitDividendIntoDigits(int dividend) {
+    private void splitDividendIntoDigits(int dividend) {
         if(dividend == 0) {
             digitsOfDividend.add(0);
-            return digitsOfDividend;
         }else {
             for(int j=10; dividend%j != 0 || dividend != 0;) {
                 digitsOfDividend.add(dividend%j);
@@ -97,30 +88,28 @@ public class Divider {
                     dividend/=j; 
             }
             Collections.reverse(digitsOfDividend);
-            return digitsOfDividend;
         }  
     }
     
     private int findIntegralPartialDividend(int i) {
-        String tempString = "";
-        if (remainder.get(i) >= divisor)  { 
-            return remainder.get(i);
-        } else {        // Concatenate remainder and partialDividend
-            if(remainder.get(i) != 0) { 
-                tempString = Integer.toString(remainder.get(i)); 
+        String tempString = "0";
+        if (result.remainder.get(i) >= divisor)  { 
+            return result.remainder.get(i);
+        } else {    // Concatenate remainder and partialDividend
+            if(result.remainder.get(i) != 0) { 
+                tempString = Integer.toString(result.remainder.get(i)); 
             } else if(indexDigitsOfDividend < digitsOfDividend.size()) {
                 tempString = Integer.toString(digitsOfDividend.get(indexDigitsOfDividend));
                 indexDigitsOfDividend++;
             } 
             
-            int indexIntegralPartialDividend = countDigitsInArray(partialDividend);
             while(Integer.parseInt(tempString) <= divisor && indexDigitsOfDividend < digitsOfDividend.size()) {
-                tempString += Integer.toString(digitsOfDividend.get(indexIntegralPartialDividend)); 
-                indexIntegralPartialDividend++;
+                tempString += Integer.toString(digitsOfDividend.get(indexDigitsOfDividend)); 
                 indexDigitsOfDividend++;
             } 
-            if(remainder.get(i) == 0 && indexDigitsOfDividend == digitsOfDividend.size()) {
-                digitsOfQuotient.add(0);
+            if(result.remainder.get(i) == 0 && indexDigitsOfDividend == digitsOfDividend.size()) {
+                result.digitsOfQuotient.add(0);
+                shiftDigit = true;
             }
             return Integer.parseInt(tempString);
         }
@@ -165,5 +154,28 @@ public class Divider {
             return sum;
         }
     }
-   
+    
+    private int countDigitsInIntegralPartialDividend(int i) {
+        if(result.integralPartialDividend.get(i) == 0) { return 1; }
+        int temp = result.integralPartialDividend.get(i);
+        int counter = 0;
+        while(temp>0) {
+            temp = temp -(temp%10);
+            temp /= 10;
+            counter++;            
+        }
+        return counter;
+    }
+    
+    private int countDigitsInRemainder(int i) {
+        if(result.remainder.get(i) == 0) { return 1; }
+        int temp = result.remainder.get(i);
+        int counter = 0;
+        while(temp>0) {
+            temp = temp -(temp%10);
+            temp /= 10;
+            counter++;            
+        }
+        return counter;
+    }
 }

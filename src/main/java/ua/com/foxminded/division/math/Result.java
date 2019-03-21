@@ -3,25 +3,38 @@ package ua.com.foxminded.division.math;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter 
-@Setter
+
 public class Result {
+    @Getter @Setter
     private int dividend;
+    @Getter @Setter
     private int divisor;
     
-    private ArrayList<Integer> digitsOfDividend = new ArrayList<Integer>();
-    private ArrayList<Integer> partialDividend = new ArrayList<Integer>();
-    private ArrayList<Integer> digitsOfQuotient = new ArrayList<Integer>();
-    private ArrayList<Integer> product = new ArrayList<Integer>();
-    private ArrayList<Integer> integralPartialDividend = new ArrayList<Integer>();
-    private ArrayList<Integer> remainder = new ArrayList<Integer>();
+    public ArrayList<Integer> digitsOfQuotient = new ArrayList<Integer>();
+    public ArrayList<Integer> product = new ArrayList<Integer>();
+    public ArrayList<Integer> integralPartialDividend = new ArrayList<Integer>();
+    public ArrayList<Integer> remainder = new ArrayList<Integer>();
     
-    private int testVar;
+//    @Getter(AccessLevel.NONE)
+//    @Setter(AccessLevel.NONE)
+//    public ArrayList<Step> arrayOfSteps = new ArrayList<Step>();
+//    public Step step = new Step();
     
-    //Шаг деления с его параметрами (для подсвечивания) можно представить в виде 
-    //(вложенного или внутреннего) класса Step или Stage.
-    public class Step {}
+//    @Getter 
+//    @Setter
+//    public class Step {
+//        private int digitsOfQuotient;
+//        private int product;
+//        private int integralPartialDividend;
+//        private int remainder;
+//    }
+//    
+//    public void addStep() {
+//        System.out.println("In function addStet()");
+//        arrayOfSteps.add(step);
+//    }
 }
