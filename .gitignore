@@ -1,6 +1,8 @@
 # JetBrains IDEs
 out/
 
+*.html
+
 ## Dir-based project format:
 .idea/
 
