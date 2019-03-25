@@ -13,8 +13,41 @@ public class ClassicFormatter implements Formatter {
     public String format(Result r) {
         result = r;
         
+        concatenateHead();
         
-        //BEGIN OF HEAD
+        output += "\n";
+        int j=1;
+        positionsBeforProduct = positionBiforeIntegralPartialDividend;
+        while(j < result.integralPartialDividend.size()) {
+            if(result.countDigitsInIntegralPartialDividend(j-1) == result.countDigitsInProduct(j)) { positionsBeforProduct++; }
+            for(int i=0; i < positionsBeforProduct; i++) { output += " "; }
+            output += result.product.get(j) + "\n";
+            for(int i=0; i < positionsBeforProduct; i++) { output += " "; }
+            for(int i=0; i < result.countDigitsInProduct(j); i++) { output += "-"; }
+            output += "\n";
+            if (result.product.get(j)-1 != 1) {
+                positionBiforeIntegralPartialDividend += result.countDigitsInRemainder(j);
+            }
+            if (j <= result.integralPartialDividend.size()-1) {
+                for(int i=0; i < positionBiforeIntegralPartialDividend; i++) { output += " "; }
+                output += "_" + result.integralPartialDividend.get(j) + "\n";
+            } else {
+                if(result.countDigitsInIntegralPartialDividend(j) != 1) { 
+                    positionBiforeIntegralPartialDividend += result.countDigitsInProduct(j-1) - result.countDigitsInIntegralPartialDividend(j);  
+                }
+                if(result.countDigitsInIntegralPartialDividend(j) == 1) { positionBiforeIntegralPartialDividend++; }
+                if(result.countDigitsInIntegralPartialDividend(j) == 1 && result.countDigitsInProduct(j - 1) == 1) { positionBiforeIntegralPartialDividend--; }
+                for(int i=0; i < positionBiforeIntegralPartialDividend; i++) { output += " "; }
+                output += result.integralPartialDividend.get(j) + "\n";
+            }
+            j++;
+        }
+    if (result.integralPartialDividend.size() == 1 && result.product.size() == 1) { return output; }
+    concatenateLastIteration(j);
+      return output;
+    }
+    
+    private void concatenateHead() {
         output = "_" + result.getDividend() + "|" + result.getDivisor() + "\n";
         positionsBeforProduct = result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0);
         output += " ";
@@ -81,37 +114,6 @@ public class ClassicFormatter implements Formatter {
                        output += " " + result.integralPartialDividend.get(0); 
                    } else { output += "_" + result.integralPartialDividend.get(0); }
         }
-      //END OF HEAD
-      output += "\n";
-      int j=1;
-      positionsBeforProduct = positionBiforeIntegralPartialDividend;
-      while(j < result.integralPartialDividend.size()) {
-          if(result.countDigitsInIntegralPartialDividend(j-1) == result.countDigitsInProduct(j)) { positionsBeforProduct++; }
-          for(int i=0; i < positionsBeforProduct; i++) { output += "*"; }
-          output += result.product.get(j) + "\n";
-          for(int i=0; i < positionsBeforProduct; i++) { output += " "; }
-          for(int i=0; i < result.countDigitsInProduct(j); i++) { output += "-"; }
-          output += "\n";
-          if (result.product.get(j)-1 != 1) {
-              positionBiforeIntegralPartialDividend += result.countDigitsInRemainder(j);
-          }
-          if (j <= result.integralPartialDividend.size()-1) {
-              for(int i=0; i < positionBiforeIntegralPartialDividend; i++) { output += "."; }
-              output += "_" + result.integralPartialDividend.get(j) + "\n";
-          } else {
-              if(result.countDigitsInIntegralPartialDividend(j) != 1) { 
-                  positionBiforeIntegralPartialDividend += result.countDigitsInProduct(j-1) - result.countDigitsInIntegralPartialDividend(j);  
-              }
-              if(result.countDigitsInIntegralPartialDividend(j) == 1) { positionBiforeIntegralPartialDividend++; }
-              if(result.countDigitsInIntegralPartialDividend(j) == 1 && result.countDigitsInProduct(j - 1) == 1) { positionBiforeIntegralPartialDividend--; }
-              for(int i=0; i < positionBiforeIntegralPartialDividend; i++) { output += "~"; }
-              output += result.integralPartialDividend.get(j) + "\n";
-          }
-          j++;
-        }
-    if (result.integralPartialDividend.size() == 1 && result.product.size() == 1) { return output; }
-    concatenateLastIteration(j);
-      return output;
     }
     
     private void concatenateLastIteration(int j) {
