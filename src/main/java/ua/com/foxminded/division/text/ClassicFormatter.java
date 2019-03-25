@@ -6,12 +6,13 @@ import ua.com.foxminded.division.math.Result;
 
 public class ClassicFormatter implements Formatter {
     private Result result;
+    private String output = "";
+    private int positionsBeforProduct = 0;
+    private int positionBiforeIntegralPartialDividend = 1;
     
     public String format(Result r) {
         result = r;
-        String output = "";
-        int positionsBeforProduct = 0;
-        int positionBiforeIntegralPartialDividend = 1;
+        
         
         //BEGIN OF HEAD
         output = "_" + result.getDividend() + "|" + result.getDivisor() + "\n";
@@ -108,44 +109,46 @@ public class ClassicFormatter implements Formatter {
           }
           j++;
         }
-    //Last iteration, concatenate last product and last remainder
     if (result.integralPartialDividend.size() == 1 && result.product.size() == 1) { return output; }
-    if (j == result.integralPartialDividend.size() && result.integralPartialDividend.size() == 1) { // was > 1
-          if (result.countDigitsInIntegralPartialDividend(j - 1) == result.countDigitsInProduct(j-1)) {
-//              
-              positionsBeforProduct = positionBiforeIntegralPartialDividend + 1;
-              if(result.remainder.get(j-1) == 0) { positionsBeforProduct++; }
-          }
-          if (result.product.size() > 1) {
-            for (int i = 0; i < positionsBeforProduct; i++) {
-                output += ":";
-            }
-            output += result.product.get(j) + "\n";
-            for (int i = 0; i < positionsBeforProduct; i++) {
-                output += ":";
-            }
-            for (int i = 0; i < result.countDigitsInProduct(j); i++) {
-                output += "-";
-            }
-            output += "\n";
-            if (result.product.size() > 1) {
-              positionBiforeIntegralPartialDividend += result.countDigitsInProduct(j) - result.countDigitsInRemainder(j) + 1;
-            }
-        }
-      
-        for (int i = 0; i < positionBiforeIntegralPartialDividend; i++) { output += "^"; }
-          output += result.remainder.get(j);
-        } else if(j == result.integralPartialDividend.size() && result.integralPartialDividend.size() > 1) {
-            positionsBeforProduct++;
-            for (int i = 0; i < positionsBeforProduct; i++) { output += ":"; }
-            output += result.product.get(j) + "\n";
-            for (int i = 0; i < positionsBeforProduct; i++) { output += " "; }
-            for(int i=0; i < result.countDigitsInProduct(j); i++) { output += "-"; }
-            output += "\n";
-            positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j) - result.countDigitsInRemainder(j);
-            for (int i = 0; i < positionBiforeIntegralPartialDividend; i++) { output += " "; }
-            output += result.remainder.get(j);
-      }
+    concatenateLastIteration(j);
       return output;
+    }
+    
+    private void concatenateLastIteration(int j) {
+        if (j == result.integralPartialDividend.size() && result.integralPartialDividend.size() == 1) { // was > 1
+            if (result.countDigitsInIntegralPartialDividend(j - 1) == result.countDigitsInProduct(j-1)) {
+                positionsBeforProduct = positionBiforeIntegralPartialDividend + 1;
+                if(result.remainder.get(j-1) == 0) { positionsBeforProduct++; }
+            }
+            if (result.product.size() > 1) {
+              for (int i = 0; i < positionsBeforProduct; i++) {
+                  output += ":";
+              }
+              output += result.product.get(j) + "\n";
+              for (int i = 0; i < positionsBeforProduct; i++) {
+                  output += ":";
+              }
+              for (int i = 0; i < result.countDigitsInProduct(j); i++) {
+                  output += "-";
+              }
+              output += "\n";
+              if (result.product.size() > 1) {
+                positionBiforeIntegralPartialDividend += result.countDigitsInProduct(j) - result.countDigitsInRemainder(j) + 1;
+              }
+          }
+        
+          for (int i = 0; i < positionBiforeIntegralPartialDividend; i++) { output += " "; }
+            output += result.remainder.get(j);
+          } else if(j == result.integralPartialDividend.size() && result.integralPartialDividend.size() > 1) {
+              positionsBeforProduct++;
+              for (int i = 0; i < positionsBeforProduct; i++) { output += " "; }
+              output += result.product.get(j) + "\n";
+              for (int i = 0; i < positionsBeforProduct; i++) { output += " "; }
+              for(int i=0; i < result.countDigitsInProduct(j); i++) { output += "-"; }
+              output += "\n";
+              positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j) - result.countDigitsInRemainder(j);
+              for (int i = 0; i < positionBiforeIntegralPartialDividend; i++) { output += " "; }
+              output += result.remainder.get(j);
+        }
     }
 }
