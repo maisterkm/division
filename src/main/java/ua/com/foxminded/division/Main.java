@@ -14,7 +14,7 @@ public class Main {
     
     public static void main(String[] args) throws IOException {
         if (args.length != 3) {
-            System.out.printf( "Wrong argument" );
+            printWrongArgument();
             System.exit(1);
         }
         
@@ -58,5 +58,15 @@ public class Main {
             String output = formatter.format(result);
             System.out.printf(output);
         }
+    }
+    
+    public static void printWrongArgument() {
+        System.out.println("Wrong argument\n" +
+                            "You should enter three arguments.\n" +
+                            "The first argument is integer dividend, the second is integer divisor, the third is key.\n" +  
+                            "There are three kind of keys:\n" + 
+                            "\t\"-c\" to display division in console\n" + 
+                            "\t\"-h\" to generate html code and to display division on the web page\n" +
+                            "\t\"-j\" to generate the string in JSON format");
     }
 }
