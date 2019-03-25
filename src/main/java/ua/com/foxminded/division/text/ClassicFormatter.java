@@ -136,8 +136,6 @@ public class ClassicFormatter implements Formatter {
         for (int i = 0; i < positionBiforeIntegralPartialDividend; i++) { output += "^"; }
           output += result.remainder.get(j);
         } else if(j == result.integralPartialDividend.size() && result.integralPartialDividend.size() > 1) {
-//            o += "\n";
-//            positionsBeforProduct = positionBiforeIntegralPartialDividend + result.countDigitsInIntegralPartialDividend(j-1) - result.countDigitsInProduct(j-1) + 1;
             positionsBeforProduct++;
             for (int i = 0; i < positionsBeforProduct; i++) { output += ":"; }
             output += result.product.get(j) + "\n";
