@@ -112,20 +112,6 @@ public class Divider {
         }
     }
     
-//    private int countDigitsInArray(ArrayList<Integer> array) {
-//        int counter = 0;
-//        for(int item : array) {
-//            int temp = item;
-//            if(item == 0) { counter++; } 
-//            while(temp > 0) {
-//                temp = temp - (temp%10);
-//                temp /= 10;
-//                counter++;
-//            }
-//        }
-//        return counter;
-//    }
-    
     public int div(int dividend, int divisor) {
         int counter = 0;
         if(divisor == 0) { throw new ArithmeticException("Dividing a number by 0"); }
@@ -151,16 +137,4 @@ public class Divider {
             return sum;
         }
     }
-    
-//    private int countDigitsInRemainder(int i) {
-//        if(result.remainder.get(i) == 0) { return 1; }
-//        int temp = result.remainder.get(i);
-//        int counter = 0;
-//        while(temp>0) {
-//            temp = temp -(temp%10);
-//            temp /= 10;
-//            counter++;            
-//        }
-//        return counter;
-//    }
 }

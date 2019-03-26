@@ -126,11 +126,11 @@ public class ClassicFormatter implements Formatter {
             }
             if (result.product.size() > 1) {
               for (int i = 0; i < positionsBeforProduct; i++) {
-                  output += ":";
+                  output += " ";
               }
               output += result.product.get(j) + "\n";
               for (int i = 0; i < positionsBeforProduct; i++) {
-                  output += ":";
+                  output += " ";
               }
               for (int i = 0; i < result.countDigitsInProduct(j); i++) {
                   output += "-";
@@ -140,7 +140,6 @@ public class ClassicFormatter implements Formatter {
                 positionBiforeIntegralPartialDividend += result.countDigitsInProduct(j) - result.countDigitsInRemainder(j) + 1;
               }
           }
-        
           for (int i = 0; i < positionBiforeIntegralPartialDividend; i++) { output += " "; }
             output += result.remainder.get(j);
           } else if(j == result.integralPartialDividend.size() && result.integralPartialDividend.size() > 1) {
