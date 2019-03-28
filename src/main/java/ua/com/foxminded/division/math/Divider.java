@@ -63,8 +63,8 @@ public class Divider {
         }
         
         if(indexOfZeroInQuotient != 0) { 
-            result.digitsOfQuotient.add(indexOfZeroInQuotient, 0);
-            result.arrayOfSteps.get(indexOfZeroInQuotient).digitsOfQuotient.add(0);
+//            result.digitsOfQuotient.add(indexOfZeroInQuotient, 0);
+            result.arrayOfSteps.get(indexOfZeroInQuotient-1).digitsOfQuotient.add(0, 0);
         }
         return result;
     }
