@@ -3,6 +3,8 @@ package ua.com.foxminded.division.math;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import ua.com.foxminded.division.math.Result.Step;
+
 public class Divider {
     public Result result = new Result();
     private int indexDigitsOfDividend = 0;
@@ -58,10 +60,11 @@ public class Divider {
                 step.setProduct(multiply(step.getDigitsOfQuotient(), divisor)); ///STEP
             }
             step.setRemainder(result.arrayOfSteps.get(i).getIntegralPartialDividend() - step.getProduct()); ///STEP
+            i++; ///STEP
             if(indexDigitsOfDividend < result.digitsOfDividend.size()) {
-                step.setIntegralPartialDividend(findIntegralPartialDividend(i)); ///STEP
+                step.setIntegralPartialDividend(findIntegralPartialDividend(step)); ///STEP
             } else { indexDigitsOfDividend++; }
-            i++;
+            
             result.arrayOfSteps.add(step);
         }
         
@@ -132,13 +135,13 @@ public class Divider {
         } 
     }
     
-    private int findIntegralPartialDividend(int i) {
+    private int findIntegralPartialDividend(Step step) {
         String tempString = "0";
-            if (result.arrayOfSteps.get(i).getRemainder() >= divisor) { ///STEP
-                return result.arrayOfSteps.get(i).getRemainder(); ///STEP
+            if (step.getRemainder() >= divisor) { ///STEP
+                return step.getRemainder(); ///STEP
             } else { // Concatenate remainder and partialDividend
-                if (result.arrayOfSteps.get(i).getRemainder() != 0) { ///STEP 
-                    tempString = Integer.toString(result.arrayOfSteps.get(i).getRemainder()); ///STEP 
+                if (step.getRemainder() != 0) { ///STEP 
+                    tempString = Integer.toString(step.getRemainder()); ///STEP 
                 } else if (indexDigitsOfDividend < result.digitsOfDividend.size()) {
                     tempString = Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
                     indexDigitsOfDividend++;
@@ -148,8 +151,8 @@ public class Divider {
                     tempString += Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
                     indexDigitsOfDividend++;
                 }
-                if (result.arrayOfSteps.get(i).getRemainder() == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) { ///STEP
-                    result.arrayOfSteps.get(i).setDigitsOfQuotient(0); ///STEP
+                if (step.getRemainder() == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) { ///STEP
+                    step.setDigitsOfQuotient(0); ///STEP
                     shiftDigit = true;
                 }
                 return Integer.parseInt(tempString);
