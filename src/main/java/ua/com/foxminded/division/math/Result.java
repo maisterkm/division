@@ -31,7 +31,9 @@ public class Result {
     @Getter 
     @Setter
     public class Step {
-        private int digitsOfQuotient;
+        @Getter(AccessLevel.NONE)
+        @Setter(AccessLevel.NONE)
+        public ArrayList<Integer> digitsOfQuotient = new ArrayList<Integer>();
         private int product;
         private int integralPartialDividend;
         private int remainder;

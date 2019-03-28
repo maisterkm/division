@@ -18,7 +18,7 @@ public class Main {
         result = divider.divide(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
         System.out.println("arrayOfSteps.size()=" + result.arrayOfSteps.size() + "\n");
         for (int k = 0; k < result.arrayOfSteps.size(); k++) {
-            System.out.println("k=" + k + " getDigitsOfQuotient()=" + result.arrayOfSteps.get(k).getDigitsOfQuotient());
+            System.out.println("k=" + k + " getDigitsOfQuotient()=" + result.arrayOfSteps.get(k).digitsOfQuotient);
             System.out.println("getProduct()=" + result.arrayOfSteps.get(k).getProduct() + "\ngetRemainder()=" + result.arrayOfSteps.get(k).getRemainder());
             System.out.print("getIntegralPartialDividend()=" + result.arrayOfSteps.get(k).getIntegralPartialDividend() + "\n");
         }
