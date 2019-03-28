@@ -20,35 +20,55 @@ public class Divider {
         splitDividendIntoDigits(dividend);
         findFirstPartialDividend(i);
         indexDigitsOfDividend = result.countDigitsInArray(result.partialDividend);
-        result.digitsOfQuotient.add(div(result.partialDividend.get(i), divisor)); 
-        result.product.add(multiply(result.digitsOfQuotient.get(i), divisor)); 
-        result.remainder.add(result.partialDividend.get(i) - result.product.get(i)); 
+        result.step.setDigitsOfQuotient(div(result.partialDividend.get(i), divisor)); ///STEP
+        result.step.setProduct(multiply(result.step.getDigitsOfQuotient(), divisor)); ///STEP
+        result.step.setRemainder(result.partialDividend.get(i) - result.step.getProduct()); ///STEP
         if(indexDigitsOfDividend < result.digitsOfDividend.size()) {
-            result.integralPartialDividend.add(findIntegralPartialDividend(i)); 
+            result.step.setIntegralPartialDividend(findFirstIntegralPartialDividend(i)); ///STEP
         } else if(indexDigitsOfDividend == result.digitsOfDividend.size() && shiftDigit == false) { 
+            result.addStep(); ///STEP
             return result; 
-        }else if(indexDigitsOfDividend == result.digitsOfDividend.size() && shiftDigit == true && result.integralPartialDividend.get(i) >= divisor) {
-            result.digitsOfQuotient.add(div(result.integralPartialDividend.get(i), divisor));
-            result.product.add(multiply(result.digitsOfQuotient.get(i), divisor)); 
-            result.remainder.add(result.partialDividend.get(i) - result.product.get(i));
+        } else if(indexDigitsOfDividend == result.digitsOfDividend.size() && shiftDigit == true && result.step.getIntegralPartialDividend() >= divisor) { ///STEP
+            result.step.setDigitsOfQuotient(div(result.step.getIntegralPartialDividend(), divisor)); ///STEP
+            result.step.setProduct(multiply(result.step.getDigitsOfQuotient(), divisor));///STEP
+            result.step.setRemainder(result.partialDividend.get(i) - result.step.getProduct()); ///STEP
+            result.addStep(); ///STEP
             return result;
-        } else if(indexDigitsOfDividend == result.digitsOfDividend.size() && shiftDigit == true && result.integralPartialDividend.get(i) < divisor) {
+        } else if(indexDigitsOfDividend == result.digitsOfDividend.size() && shiftDigit == true && result.step.getIntegralPartialDividend() < divisor) { ///STEP
+            result.addStep(); ///STEP
             return result;
         }
+        result.addStep(); ///STEP
+        /////////////////////////
+//        for (int k = 0; k < result.arrayOfSteps.size(); k++) {
+//            System.out.println("arrayOfSteps.size()=" + result.arrayOfSteps.size() + " getDigitsOfQuotient()=" + result.arrayOfSteps.get(i).getDigitsOfQuotient());
+//            System.out.print(" getProduct()=" + result.arrayOfSteps.get(i).getProduct() + " getRemainder()=" + result.arrayOfSteps.get(i).getRemainder());
+//            System.out.print(" getIntegralPartialDividend()=" + result.arrayOfSteps.get(i).getIntegralPartialDividend());
+//        }
+        /////////////////////////
         while(indexDigitsOfDividend <= result.digitsOfDividend.size()) {
-            if (result.integralPartialDividend.get(i) < divisor) { break; }
-            result.digitsOfQuotient.add(div(result.integralPartialDividend.get(i), divisor));
-            if (result.countDigitsInIntegralPartialDividend(0) - result.countDigitsInRemainder(i) > 1 && result.remainder.get(i) != 0) { indexOfZeroInQuotient = i+1; } 
-                i++;
-                if (result.digitsOfQuotient.get(i) == 0) {
-                    result.product.add(multiply(result.digitsOfQuotient.get(i+1), divisor));
-                } else { result.product.add(multiply(result.digitsOfQuotient.get(i), divisor)); }
-                result.remainder.add(result.integralPartialDividend.get(i - 1) - result.product.get(i));
+            Result.Step step = new Result().new Step();
+            if (result.arrayOfSteps.get(i).getIntegralPartialDividend() < divisor) { break; } ///STEP
+            step.setDigitsOfQuotient(div(result.arrayOfSteps.get(i).getIntegralPartialDividend(), divisor)); ///STEP
+            if (result.countDigitsInIntegralPartialDividend(0) - result.countDigitsInRemainder(i) > 1 && result.arrayOfSteps.get(i).getRemainder() != 0) { indexOfZeroInQuotient = i+1; } ///STEP
+                //i++;
+            if (step.getDigitsOfQuotient() == 0) { ///STEP
+                result.step.setProduct(multiply(step.getDigitsOfQuotient(), divisor)); ///STEP
+            } else { 
+                step.setProduct(multiply(step.getDigitsOfQuotient(), divisor)); ///STEP
+            }
+            step.setRemainder(result.arrayOfSteps.get(i).getIntegralPartialDividend() - step.getProduct()); ///STEP
             if(indexDigitsOfDividend < result.digitsOfDividend.size()) {
-                result.integralPartialDividend.add(findIntegralPartialDividend(i)); 
+                step.setIntegralPartialDividend(findIntegralPartialDividend(i)); ///STEP
             } else { indexDigitsOfDividend++; }
+            i++;
+            result.arrayOfSteps.add(step);
         }
-        if(indexOfZeroInQuotient != 0) { result.digitsOfQuotient.add(indexOfZeroInQuotient, 0); }
+        
+        if(indexOfZeroInQuotient != 0) { 
+            result.digitsOfQuotient.add(indexOfZeroInQuotient, 0);
+            result.arrayOfSteps.get(indexOfZeroInQuotient).setDigitsOfQuotient(0); ///STEP
+        }
         return result;
     }
     
@@ -70,6 +90,7 @@ public class Divider {
                        i++; 
                     }
                 }
+                result.setFirstPartialDividend(tempDividendInt); /////!!!!!
                 result.partialDividend.add(tempDividendInt);
             } 
         }
@@ -88,28 +109,51 @@ public class Divider {
         }  
     }
     
+    private int findFirstIntegralPartialDividend(int i) {
+        String tempString = "0";
+      if (result.step.getRemainder() >= divisor) { ///STEP
+          return result.step.getRemainder(); ///STEP
+      } else { // Concatenate remainder and partialDividend 
+          if (result.step.getRemainder() != 0) { ///STEP 
+              tempString = Integer.toString(result.step.getRemainder()); ///STEP 
+          } else if (indexDigitsOfDividend < result.digitsOfDividend.size()) {
+              tempString = Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
+              indexDigitsOfDividend++;
+          }
+          while (Integer.parseInt(tempString) <= divisor && indexDigitsOfDividend < result.digitsOfDividend.size()) {
+              tempString += Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
+              indexDigitsOfDividend++;
+          }
+          if (result.step.getRemainder() == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) { ///STEP
+              result.step.setDigitsOfQuotient(0); ///STEP
+              shiftDigit = true;
+          }
+          return Integer.parseInt(tempString); 
+        } 
+    }
+    
     private int findIntegralPartialDividend(int i) {
         String tempString = "0";
-        if (result.remainder.get(i) >= divisor)  { 
-            return result.remainder.get(i);
-        } else {    // Concatenate remainder and partialDividend
-            if(result.remainder.get(i) != 0) { 
-                tempString = Integer.toString(result.remainder.get(i)); 
-            } else if(indexDigitsOfDividend < result.digitsOfDividend.size()) {
-                tempString = Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
-                indexDigitsOfDividend++;
+            if (result.arrayOfSteps.get(i).getRemainder() >= divisor) { ///STEP
+                return result.arrayOfSteps.get(i).getRemainder(); ///STEP
+            } else { // Concatenate remainder and partialDividend
+                if (result.arrayOfSteps.get(i).getRemainder() != 0) { ///STEP 
+                    tempString = Integer.toString(result.arrayOfSteps.get(i).getRemainder()); ///STEP 
+                } else if (indexDigitsOfDividend < result.digitsOfDividend.size()) {
+                    tempString = Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
+                    indexDigitsOfDividend++;
+                }
+        
+                while (Integer.parseInt(tempString) <= divisor && indexDigitsOfDividend < result.digitsOfDividend.size()) {
+                    tempString += Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
+                    indexDigitsOfDividend++;
+                }
+                if (result.arrayOfSteps.get(i).getRemainder() == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) { ///STEP
+                    result.arrayOfSteps.get(i).setDigitsOfQuotient(0); ///STEP
+                    shiftDigit = true;
+                }
+                return Integer.parseInt(tempString);
             } 
-            
-            while(Integer.parseInt(tempString) <= divisor && indexDigitsOfDividend < result.digitsOfDividend.size()) {
-                tempString += Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend)); 
-                indexDigitsOfDividend++;
-            } 
-            if(result.remainder.get(i) == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) {
-                result.digitsOfQuotient.add(0);
-                shiftDigit = true;
-            }
-            return Integer.parseInt(tempString);
-        }
     }
     
     public int div(int dividend, int divisor) {
