@@ -38,6 +38,10 @@ public class Result {
         arrayOfSteps.add(step);
     }
     
+    public int getValueOfLastIntegralPartialDividend() {
+        return arrayOfSteps.get(arrayOfSteps.size()-1).getIntegralPartialDividend();
+    }
+    
     public int getTotalSizeDigitsOfQuotient() {
         int totalSize = 0;
         for (Step step : arrayOfSteps) {
