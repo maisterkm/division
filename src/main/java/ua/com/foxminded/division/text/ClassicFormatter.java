@@ -14,7 +14,10 @@ public class ClassicFormatter implements Formatter {
     
     public String format(Result r) {
         result = r;
-        concatenateFirstStep();
+        if (result.arrayOfSteps.size() <= 2) {
+            concatenateFirstStep_short();
+        }
+        
         output += "\n";
         int j=1;
 //        positionsBeforProduct = positionBiforeIntegralPartialDividend;
@@ -47,14 +50,14 @@ public class ClassicFormatter implements Formatter {
       return output;
     }
     
-    private void concatenateFirstStep() {
+    private void concatenateFirstStep_short() {
         output = "_" + result.getDividend() + "|" + result.getDivisor() + "\n";
         positionsBeforProduct = result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0);
         output += " ";
         for(int i=0; i < positionsBeforProduct; i++) { output += " "; }
-        output += Integer.toString(result.arrayOfSteps.get(0).getProduct()); //System.out.print(product.get(0));
+        output += Integer.toString(result.arrayOfSteps.get(0).getProduct());
         if (result.countDigitsInProduct(0) + positionsBeforProduct < result.digitsOfDividend.size()) {
-            for (int i = 0; i < result.getLength(); i++) {
+              for (int i = 0; i < result.digitsOfDividend.size()-result.countDigitsInProduct(0)-positionsBeforProduct; i++) {
                 output += " ";
             } 
         }
@@ -65,7 +68,8 @@ public class ClassicFormatter implements Formatter {
         for(int i=0; i < positionsBeforProduct; i++) { output += " "; }
         for(int i=0; i < result.countDigitsInProduct(0); i++) { output += "-"; }
         if (result.countDigitsInProduct(0) + positionsBeforProduct < result.digitsOfDividend.size()) {
-            for (int i = 0; i < result.getLength(); i++) {
+//            for (int i = 0; i < result.getLength(); i++) {
+            for (int i = 0; i < result.digitsOfDividend.size()-result.countDigitsInProduct(0)-positionsBeforProduct; i++) {
                 output += " ";
             } 
         }
@@ -74,7 +78,13 @@ public class ClassicFormatter implements Formatter {
         output += "\n";
         if (result.arrayOfSteps.size() <= 2 && result.arrayOfSteps.get(0).getIntegralPartialDividend() != 0) { //If there is only one iteration
             if (result.arrayOfSteps.get(0).getRemainder() != 0) {
-                positionBiforeIntegralPartialDividend += result.countDigitsInProduct(0) - result.countDigitsInIntegralPartialDividend(0);
+                if (result.countDigitsInProduct(0)==2 && result.countDigitsInIntegralPartialDividend(0)==3) {
+                    positionBiforeIntegralPartialDividend = Math.abs(
+                            result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0));
+                } else {
+                    positionBiforeIntegralPartialDividend = Math.abs(
+                            result.countDigitsInProduct(0) - result.countDigitsInRemainder(0));
+                }
             }
             if(result.arrayOfSteps.get(0).getRemainder() == 0) { 
                 if (result.arrayOfSteps.size() == 1 && result.arrayOfSteps.get(0).getIntegralPartialDividend() != 0) {
@@ -88,10 +98,9 @@ public class ClassicFormatter implements Formatter {
                 output += "_" + result.arrayOfSteps.get(0).getIntegralPartialDividend();
             } else { 
                     if(result.arrayOfSteps.get(0).getRemainder() == 0) {
-//                        for(int i = 0; i < positionBiforeIntegralPartialDividend; i++) { output += " "; } 
                         output += result.arrayOfSteps.get(0).getIntegralPartialDividend();
                     } else {
-                            for(int i = 0; i < result.countDigitsInProduct(0); i++) { output += " "; } 
+                            for(int i = 0; i < result.countDigitsInProduct(0)-result.countDigitsInRemainder(0); i++) { output += " "; } 
                             output += result.arrayOfSteps.get(0).getIntegralPartialDividend();
                     }
                 }
