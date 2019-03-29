@@ -8,59 +8,57 @@ import ua.com.foxminded.division.math.*;
 import ua.com.foxminded.division.text.ClassicFormatter;
 import ua.com.foxminded.division.text.Formatter;
 import ua.com.foxminded.division.text.HtmlFormatter;
-import ua.com.foxminded.division.text.JsonFormatter;
+//import ua.com.foxminded.division.text.JsonFormatter;
 
 public class Main {
     
     public static void main(String[] args) throws IOException {
-        Divider divider = new Divider();
-        Result result = new Result();
-        result = divider.divide(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-        System.out.println("arrayOfSteps.size()=" + result.arrayOfSteps.size() + "\n");
-        for (int k = 0; k < result.arrayOfSteps.size(); k++) {
-            System.out.println("k=" + k + " getDigitsOfQuotient()=" + result.arrayOfSteps.get(k).digitsOfQuotient);
-            System.out.println("getProduct()=" + result.arrayOfSteps.get(k).getProduct() + "\ngetRemainder()=" + result.arrayOfSteps.get(k).getRemainder());
-            System.out.print("getIntegralPartialDividend()=" + result.arrayOfSteps.get(k).getIntegralPartialDividend() + "\n");
+//        Divider divider = new Divider();
+//        Result result = new Result();
+//        result = divider.divide(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+//        System.out.println("arrayOfSteps.size()=" + result.arrayOfSteps.size() + "\n");
+//        for (int k = 0; k < result.arrayOfSteps.size(); k++) {
+//            System.out.println("k=" + k + " getDigitsOfQuotient()=" + result.arrayOfSteps.get(k).digitsOfQuotient);
+//            System.out.println("getProduct()=" + result.arrayOfSteps.get(k).getProduct() + "\ngetRemainder()=" + result.arrayOfSteps.get(k).getRemainder());
+//            System.out.print("getIntegralPartialDividend()=" + result.arrayOfSteps.get(k).getIntegralPartialDividend() + "\n");
+//        }
+        
+        
+        if (args.length != 3) {
+            printWrongArgument();
+            System.exit(1);
         }
         
+        if(args[2].contentEquals("-c")) {
+            int dividend = Integer.parseInt(args[0]);
+            int divisor = Integer.parseInt(args[1]);
+            Divider divider = new Divider();
+            Result result = new Result();
+            result = divider.divide(dividend, divisor);
+            Formatter formatter = new ClassicFormatter();
+            String output = formatter.format(result);
+            System.out.printf(output);
+        }
+      
+        if (args[2].equals("-h")) {
+            int dividend = Integer.parseInt(args[0]);
+            int divisor = Integer.parseInt(args[1]);
+            Divider divider = new Divider();
+            Result result = new Result();
+            result = divider.divide(dividend, divisor);
+            Formatter formatter = new HtmlFormatter();
+            String output = formatter.format(result);
+            System.out.printf(output);
+            
+            File file = new File("index.html");
+            file.createNewFile();
+            FileWriter writer = new FileWriter(file);
+            writer.write(output);
+            writer.flush();
+            writer.close();
+            
+        }
         
-        
-        
-//        if (args.length != 3) {
-//            printWrongArgument();
-//            System.exit(1);
-//        }
-//        
-//        if(args[2].contentEquals("-c")) {
-//            int dividend = Integer.parseInt(args[0]);
-//            int divisor = Integer.parseInt(args[1]);
-//            Divider divider = new Divider();
-//            Result result = new Result();
-//            result = divider.divide(dividend, divisor);
-//            Formatter formatter = new ClassicFormatter();
-//            String output = formatter.format(result);
-//            System.out.printf(output);
-//        }
-//      
-//        if (args[2].equals("-h")) {
-//            int dividend = Integer.parseInt(args[0]);
-//            int divisor = Integer.parseInt(args[1]);
-//            Divider divider = new Divider();
-//            Result result = new Result();
-//            result = divider.divide(dividend, divisor);
-//            Formatter formatter = new HtmlFormatter();
-//            String output = formatter.format(result);
-//            System.out.printf(output);
-//            
-//            File file = new File("index.html");
-//            file.createNewFile();
-//            FileWriter writer = new FileWriter(file);
-//            writer.write(output);
-//            writer.flush();
-//            writer.close();
-//            
-//        }
-//        
 //        if (args[2].equals("-j")) {
 //            int dividend = Integer.parseInt(args[0]);
 //            int divisor = Integer.parseInt(args[1]);
