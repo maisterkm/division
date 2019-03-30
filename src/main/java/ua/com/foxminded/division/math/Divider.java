@@ -63,7 +63,6 @@ public class Divider {
         }
         
         if(indexOfZeroInQuotient != 0) { 
-//            result.digitsOfQuotient.add(indexOfZeroInQuotient, 0);
             result.arrayOfSteps.get(indexOfZeroInQuotient-1).digitsOfQuotient.add(0, 0);
         }
         return result;
@@ -87,7 +86,7 @@ public class Divider {
                        i++; 
                     }
                 }
-                result.setFirstPartialDividend(tempDividendInt); /////!!!!!
+                result.setFirstPartialDividend(tempDividendInt);
                 result.partialDividend.add(tempDividendInt);
             } 
         }
@@ -108,11 +107,11 @@ public class Divider {
     
     private int findFirstIntegralPartialDividend(int i) {
         String tempString = "0";
-      if (result.step.getRemainder() >= divisor) { ///STEP
-          return result.step.getRemainder(); ///STEP
-      } else { // Concatenate remainder and partialDividend 
-          if (result.step.getRemainder() != 0) { ///STEP 
-              tempString = Integer.toString(result.step.getRemainder()); ///STEP 
+      if (result.step.getRemainder() >= divisor) {
+          return result.step.getRemainder();
+      } else {
+          if (result.step.getRemainder() != 0) { 
+              tempString = Integer.toString(result.step.getRemainder()); 
           } else if (indexDigitsOfDividend < result.digitsOfDividend.size()) {
               tempString = Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
               indexDigitsOfDividend++;
@@ -121,8 +120,8 @@ public class Divider {
               tempString += Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
               indexDigitsOfDividend++;
           }
-          if (result.step.getRemainder() == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) { ///STEP
-              result.step.digitsOfQuotient.add(0); ///STEP
+          if (result.step.getRemainder() == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) {
+              result.step.digitsOfQuotient.add(0);
               shiftDigit = true;
           }
           return Integer.parseInt(tempString); 
@@ -131,11 +130,11 @@ public class Divider {
     
     private int findIntegralPartialDividend(Step step) {
         String tempString = "0";
-            if (step.getRemainder() >= divisor) { ///STEP
-                return step.getRemainder(); ///STEP
-            } else { // Concatenate remainder and partialDividend
-                if (step.getRemainder() != 0) { ///STEP 
-                    tempString = Integer.toString(step.getRemainder()); ///STEP 
+            if (step.getRemainder() >= divisor) {
+                return step.getRemainder();
+            } else {
+                if (step.getRemainder() != 0) { 
+                    tempString = Integer.toString(step.getRemainder()); 
                 } else if (indexDigitsOfDividend < result.digitsOfDividend.size()) {
                     tempString = Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
                     indexDigitsOfDividend++;
@@ -145,8 +144,8 @@ public class Divider {
                     tempString += Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
                     indexDigitsOfDividend++;
                 }
-                if (step.getRemainder() == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) { ///STEP
-                    step.digitsOfQuotient.add(0); ///STEP
+                if (step.getRemainder() == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) {
+                    step.digitsOfQuotient.add(0);
                     shiftDigit = true;
                 }
                 return Integer.parseInt(tempString);

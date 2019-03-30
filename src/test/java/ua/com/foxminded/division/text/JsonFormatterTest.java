@@ -18,7 +18,7 @@ public class JsonFormatterTest {
     public void before() {
         divider = new Divider();
         result = new Result();
-        formatter = new JsonFormatter();
+//        formatter = new JsonFormatter();
     }
     
     @Test
