@@ -1,7 +1,6 @@
 package ua.com.foxminded.division.math;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import lombok.AccessLevel;
 import lombok.Getter;

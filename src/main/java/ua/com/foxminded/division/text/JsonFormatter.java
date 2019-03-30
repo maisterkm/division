@@ -11,17 +11,17 @@ public class JsonFormatter implements Formatter {
         
         output += "{\n";
         
-        output += "\t\"dividend\":" + result.getDividend() + ",\n";
-        output += "\t\"divisor\":" + result.getDivisor() + ",\n";
-        output += "\t\"partialDividend\":" + result.partialDividend.get(0) + ",\n";
-        output += "\t\"digitsOfDividend\":" + "[";
+        output += "\"dividend\":" + result.getDividend() + ",\n";
+        output += "\"divisor\":" + result.getDivisor() + ",\n";
+        output += "\"partialDividend\":" + result.partialDividend.get(0) + ",\n";
+        output += "\"digitsOfDividend\":" + "[";
         for(int i = 0; i < result.digitsOfDividend.size(); i++) { 
             output += result.digitsOfDividend.get(i);
             if(i != result.digitsOfDividend.size()-1) { output += ", "; }
         }
         output += "],\n";
         
-        output += "\t\"digitsOfQuotient\":" + "[";
+        output += "\"digitsOfQuotient\":" + "[";
         for(int i = 0; i < result.arrayOfSteps.size(); i++) { 
             for (int j = 0; j < result.arrayOfSteps.get(i).digitsOfQuotient.size(); j++) {
                 output += result.arrayOfSteps.get(i).digitsOfQuotient.get(j);
@@ -30,21 +30,21 @@ public class JsonFormatter implements Formatter {
         }
         output += "],\n";
         
-        output += "\t\"product\":" + "[";
+        output += "\"product\":" + "[";
         for(int i = 0; i < result.arrayOfSteps.size(); i++) { 
             output += result.arrayOfSteps.get(i).getProduct();
             if(i != result.arrayOfSteps.size()-1) { output += ", "; }
         }
         output += "],\n";
         
-        output += "\t\"integralPartialDividend\":" + "[";
+        output += "\"integralPartialDividend\":" + "[";
         for(int i = 0; i < result.arrayOfSteps.size(); i++) { 
             output += result.arrayOfSteps.get(i).getIntegralPartialDividend();
             if(i != result.arrayOfSteps.size()-1) { output += ", "; }
         }
         output += "],\n";
         
-        output += "\t\"remainder\":" + "[";
+        output += "\"remainder\":" + "[";
         for(int i = 0; i < result.arrayOfSteps.size(); i++) { 
             output += result.arrayOfSteps.get(i).getRemainder();
             if(i != result.arrayOfSteps.size()-1) { output += ", "; }
@@ -54,5 +54,4 @@ public class JsonFormatter implements Formatter {
         output += "\n}";
         return output;
     }
-
 }
