@@ -35,24 +35,14 @@ public class ClassicFormatterTest {
     }
     
     @Test
-    public void classicFormatterShouldReturnExpectedString() {
-        result = divider.divide(78945, 4);
-        String expected_1 = "_78945|4\n 4    |-----\n -    |19736\n_38\n 36\n --\n _29\n" + 
-                "  28\n  --\n  _14\n   12\n   --\n   _25\n    24\n    --\n     1";
-        assertEquals(expected_1, formatter.format(result));
+    public void division5By5ShouldReturn1() {
+        result = divider.divide(5, 5);
+        String expected = "_5|5\n" + 
+                " 5|-\n" + 
+                " -|1\n" + 
+                " 0";
+        assertEquals(expected, formatter.format(result));
     }
-    
-    @Test
-    public void classicFormatterShouldReturnExpectedString_2() {
-        result = divider.divide(0, 5);
-        String expected_2 = "_0|5\n" + 
-                " 0|-\n" + 
-                " -|0\n" + 
-                " 0\n" + 
-                "";
-        assertEquals(expected_2, formatter.format(result));
-    }
-
 }
 
 
