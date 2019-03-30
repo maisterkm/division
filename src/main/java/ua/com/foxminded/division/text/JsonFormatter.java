@@ -9,47 +9,49 @@ public class JsonFormatter implements Formatter {
         result = r;
         String output = "";
         
-        output += "{";
+        output += "{\n";
         
-        output += "\"dividend\":" + result.getDividend() + ", ";
-        output += "\"divisor\":" + result.getDivisor() + ", ";
-        output += "\"partialDividend\":" + result.partialDividend.get(0) + ", ";
-        output += "\"digitsOfDividend\":" + "[";
+        output += "\t\"dividend\":" + result.getDividend() + ",\n";
+        output += "\t\"divisor\":" + result.getDivisor() + ",\n";
+        output += "\t\"partialDividend\":" + result.partialDividend.get(0) + ",\n";
+        output += "\t\"digitsOfDividend\":" + "[";
         for(int i = 0; i < result.digitsOfDividend.size(); i++) { 
             output += result.digitsOfDividend.get(i);
             if(i != result.digitsOfDividend.size()-1) { output += ", "; }
         }
-        output += "], ";
+        output += "],\n";
         
-        output += "\"digitsOfQuotient\":" + "[";
-        for(int i = 0; i < result.digitsOfQuotient.size(); i++) { 
-            output += result.digitsOfQuotient.get(i);
-            if(i != result.digitsOfQuotient.size()-1) { output += ", "; }
+        output += "\t\"digitsOfQuotient\":" + "[";
+        for(int i = 0; i < result.arrayOfSteps.size(); i++) { 
+            for (int j = 0; j < result.arrayOfSteps.get(i).digitsOfQuotient.size(); j++) {
+                output += result.arrayOfSteps.get(i).digitsOfQuotient.get(j);
+            }
+            if(i != result.arrayOfSteps.size()-1) { output += ", "; }
         }
-        output += "], ";
+        output += "],\n";
         
-        output += "\"product\":" + "[";
-        for(int i = 0; i < result.product.size(); i++) { 
-            output += result.product.get(i);
-            if(i != result.product.size()-1) { output += ", "; }
+        output += "\t\"product\":" + "[";
+        for(int i = 0; i < result.arrayOfSteps.size(); i++) { 
+            output += result.arrayOfSteps.get(i).getProduct();
+            if(i != result.arrayOfSteps.size()-1) { output += ", "; }
         }
-        output += "], ";
+        output += "],\n";
         
-        output += "\"integralPartialDividend\":" + "[";
-        for(int i = 0; i < result.integralPartialDividend.size(); i++) { 
-            output += result.integralPartialDividend.get(i);
-            if(i != result.integralPartialDividend.size()-1) { output += ", "; }
+        output += "\t\"integralPartialDividend\":" + "[";
+        for(int i = 0; i < result.arrayOfSteps.size(); i++) { 
+            output += result.arrayOfSteps.get(i).getIntegralPartialDividend();
+            if(i != result.arrayOfSteps.size()-1) { output += ", "; }
         }
-        output += "], ";
+        output += "],\n";
         
-        output += "\"remainder\":" + "[";
-        for(int i = 0; i < result.remainder.size(); i++) { 
-            output += result.remainder.get(i);
-            if(i != result.remainder.size()-1) { output += ", "; }
+        output += "\t\"remainder\":" + "[";
+        for(int i = 0; i < result.arrayOfSteps.size(); i++) { 
+            output += result.arrayOfSteps.get(i).getRemainder();
+            if(i != result.arrayOfSteps.size()-1) { output += ", "; }
         }
         output += "]";
         
-        output += "}";
+        output += "\n}";
         return output;
     }
 
