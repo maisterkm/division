@@ -18,7 +18,7 @@ public class JsonFormatterTest {
     public void before() {
         divider = new Divider();
         result = new Result();
-//        formatter = new JsonFormatter();
+        formatter = new JsonFormatter();
     }
     
     @Test
@@ -36,12 +36,18 @@ public class JsonFormatterTest {
     }
     
     @Test
-    public void classicFormatterShouldReturnExpectedString() {
-        result = divider.divide(78945, 4);
-        String expected = "{\"dividend\":78945, "
-                + "\"divisor\":4, \"partialDividend\":7, \"digitsOfDividend\":[7, 8, 9, 4, 5], "
-                + "\"digitsOfQuotient\":[1, 9, 7, 3, 6], \"product\":[4, 36, 28, 12, 24], "
-                + "\"integralPartialDividend\":[38, 29, 14, 25], \"remainder\":[3, 2, 1, 2, 1]}";
+    public void division5By5ShouldReturn1() {
+        result = divider.divide(5, 5);
+        String expected = "{\n" + 
+                "\"dividend\":5,\n" + 
+                "\"divisor\":5,\n" + 
+                "\"partialDividend\":5,\n" + 
+                "\"digitsOfDividend\":[5],\n" + 
+                "\"digitsOfQuotient\":[1],\n" + 
+                "\"product\":[5],\n" + 
+                "\"integralPartialDividend\":[0],\n" + 
+                "\"remainder\":[0]\n" + 
+                "}";
         assertEquals(expected, formatter.format(result));
     }
 
