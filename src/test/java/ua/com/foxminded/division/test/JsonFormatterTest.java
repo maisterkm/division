@@ -276,5 +276,21 @@ public class JsonFormatterTest {
                 "}";
         assertEquals(expected, formatter.format(result));
     }
+    
+    @Test
+    public void division512By48ShouldReturn10() {
+        result = divider.divide(512, 48);
+        String expected = "{\n" + 
+                "\"dividend\":512,\n" + 
+                "\"divisor\":48,\n" + 
+                "\"partialDividend\":51,\n" + 
+                "\"digitsOfDividend\":[5, 1, 2],\n" + 
+                "\"digitsOfQuotient\":[10],\n" + 
+                "\"product\":[48],\n" + 
+                "\"integralPartialDividend\":[32],\n" + 
+                "\"remainder\":[3]\n" + 
+                "}";
+        assertEquals(expected, formatter.format(result));
+    }
 
 }

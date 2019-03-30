@@ -336,5 +336,22 @@ public class HtmlFormatterTest {
                 "</html>";
         assertEquals(expected, formatter.format(result));
     }
+    
+    @Test
+    public void division512By48ShouldReturn10() {
+        result = divider.divide(512, 48);
+        String expected = "<html>\n" + 
+                "<title>Division</title>\n" + 
+                "<body>\n" + 
+                "<pre>\n" + 
+                "_512|48\n" + 
+                " 48 |--\n" + 
+                " -- |10\n" + 
+                "  32\n" + 
+                "</pre>\n" + 
+                "</body>\n" + 
+                "</html>";
+        assertEquals(expected, formatter.format(result));
+    }
 
 }

@@ -230,6 +230,16 @@ public class ClassicFormatterTest {
                 "    1";
         assertEquals(expected, formatter.format(result));
     }
+    
+    @Test
+    public void division512By48ShouldReturn10() {
+        result = divider.divide(512, 48);
+        String expected = "_512|48\n" + 
+                " 48 |--\n" + 
+                " -- |10\n" + 
+                "  32";
+        assertEquals(expected, formatter.format(result));
+    }
 }
 
 

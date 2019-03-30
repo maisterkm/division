@@ -1,6 +1,6 @@
 package ua.com.foxminded.division.math;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Collections;
 
 import ua.com.foxminded.division.math.Result.Step;
@@ -44,11 +44,16 @@ public class Divider {
        
         while(indexDigitsOfDividend <= result.digitsOfDividend.size()) {
             Result.Step step = new Result().new Step();
-            if (result.arrayOfSteps.get(i).getIntegralPartialDividend() < divisor) { break; }
+            if (result.arrayOfSteps.get(i).getIntegralPartialDividend() < divisor) {
+                if (result.step.getRemainder() != 0) {
+                    result.step.digitsOfQuotient.add(0);
+                }
+                break; 
+            }
             step.digitsOfQuotient.add(div(result.arrayOfSteps.get(i).getIntegralPartialDividend(), divisor));
             if (result.countDigitsInIntegralPartialDividend(0) - result.countDigitsInRemainder(i) > 1 && result.arrayOfSteps.get(i).getRemainder() != 0) { indexOfZeroInQuotient = i+1; }
                 //i++;
-            if (step.digitsOfQuotient.get(0) == 0) { ///STEP
+            if (step.digitsOfQuotient.get(0) == 0) {
                 result.step.setProduct(multiply(step.digitsOfQuotient.get(0), divisor));
             } else { 
                 step.setProduct(multiply(step.digitsOfQuotient.get(0), divisor));
