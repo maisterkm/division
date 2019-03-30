@@ -12,13 +12,13 @@ public class Divider {
     private boolean shiftDigit = false;
     private int dividend;
     private int divisor;
+    int i = 0;
     
     public Result divide(int dividend, int divisor) {
         this.dividend = dividend;
         this.divisor = divisor;
         result.setDividend(dividend);
         result.setDivisor(divisor);
-        int i = 0;
         splitDividendIntoDigits(dividend);
         findFirstPartialDividend(i);
         indexDigitsOfDividend = result.countDigitsInArray(result.partialDividend);
@@ -42,6 +42,15 @@ public class Divider {
         }
         result.addStep();
        
+        loopForSteps();
+        
+        if(indexOfZeroInQuotient != 0) { 
+            result.arrayOfSteps.get(indexOfZeroInQuotient-1).digitsOfQuotient.add(0, 0);
+        }
+        return result;
+    }
+    
+    public void loopForSteps() {
         while(indexDigitsOfDividend <= result.digitsOfDividend.size()) {
             Result.Step step = new Result().new Step();
             if (result.arrayOfSteps.get(i).getIntegralPartialDividend() < divisor) {
@@ -66,11 +75,6 @@ public class Divider {
             
             result.arrayOfSteps.add(step);
         }
-        
-        if(indexOfZeroInQuotient != 0) { 
-            result.arrayOfSteps.get(indexOfZeroInQuotient-1).digitsOfQuotient.add(0, 0);
-        }
-        return result;
     }
     
     private void findFirstPartialDividend(int i) {
