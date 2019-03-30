@@ -1,4 +1,4 @@
-package ua.com.foxminded.division.text;
+package ua.com.foxminded.division.test;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import ua.com.foxminded.division.math.Divider;
 import ua.com.foxminded.division.math.Result;
+import ua.com.foxminded.division.text.Formatter;
+import ua.com.foxminded.division.text.HtmlFormatter;
 
 public class HtmlFormatterTest {
 

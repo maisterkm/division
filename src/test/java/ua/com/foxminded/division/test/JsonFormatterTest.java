@@ -1,4 +1,4 @@
-package ua.com.foxminded.division.text;
+package ua.com.foxminded.division.test;
 
 import static org.junit.Assert.*;
 
@@ -7,8 +7,11 @@ import org.junit.Test;
 
 import ua.com.foxminded.division.math.Divider;
 import ua.com.foxminded.division.math.Result;
+import ua.com.foxminded.division.text.Formatter;
+import ua.com.foxminded.division.text.JsonFormatter;
 
-public class ClassicFormatterTest {
+public class JsonFormatterTest {
+
     Divider divider;
     Result result;
     Formatter formatter;
@@ -17,7 +20,7 @@ public class ClassicFormatterTest {
     public void before() {
         divider = new Divider();
         result = new Result();
-        formatter = new ClassicFormatter();
+        formatter = new JsonFormatter();
     }
     
     @Test
@@ -37,13 +40,17 @@ public class ClassicFormatterTest {
     @Test
     public void division5By5ShouldReturn1() {
         result = divider.divide(5, 5);
-        String expected = "_5|5\n" + 
-                " 5|-\n" + 
-                " -|1\n" + 
-                " 0";
+        String expected = "{\n" + 
+                "\"dividend\":5,\n" + 
+                "\"divisor\":5,\n" + 
+                "\"partialDividend\":5,\n" + 
+                "\"digitsOfDividend\":[5],\n" + 
+                "\"digitsOfQuotient\":[1],\n" + 
+                "\"product\":[5],\n" + 
+                "\"integralPartialDividend\":[0],\n" + 
+                "\"remainder\":[0]\n" + 
+                "}";
         assertEquals(expected, formatter.format(result));
     }
+
 }
-
-
-
