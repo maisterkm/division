@@ -20,22 +20,14 @@ public class Main {
         }
 
         if (args[2].contentEquals("-c")) {
-            int dividend = Integer.parseInt(args[0]);
-            int divisor = Integer.parseInt(args[1]);
-            Divider divider = new Divider();
-            Result result = new Result();
-            result = divider.divide(dividend, divisor);
+            Result result = initializationOfResult(args[0], args[1]);
             Formatter formatter = new ClassicFormatter();
             String output = formatter.format(result);
             System.out.printf(output);
         }
 
         if (args[2].equals("-h")) {
-            int dividend = Integer.parseInt(args[0]);
-            int divisor = Integer.parseInt(args[1]);
-            Divider divider = new Divider();
-            Result result = new Result();
-            result = divider.divide(dividend, divisor);
+            Result result = initializationOfResult(args[0], args[1]);
             Formatter formatter = new HtmlFormatter();
             String output = formatter.format(result);
             System.out.printf(output);
@@ -50,18 +42,21 @@ public class Main {
         }
 
         if (args[2].equals("-j")) {
-            int dividend = Integer.parseInt(args[0]);
-            int divisor = Integer.parseInt(args[1]);
-            Divider divider = new Divider();
-            Result result = new Result();
-            result = divider.divide(dividend, divisor);
+            Result result = initializationOfResult(args[0], args[1]);
             Formatter formatter = new JsonFormatter();
             String output = formatter.format(result);
             System.out.printf(output);
         }
     }
 
-    public static void printWrongArgument() {
+    private static Result initializationOfResult(String arg1, String arg2) {
+        int dividend = Integer.parseInt(arg1);
+        int divisor = Integer.parseInt(arg2);
+        Divider divider = new Divider();
+        return divider.divide(dividend, divisor);
+    }
+
+    private static void printWrongArgument() {
         System.out.println("Wrong argument\n" + "You should enter three arguments.\n"
                 + "The first argument is integer dividend, the second is integer divisor, the third is key.\n"
                 + "There are three kind of keys:\n" + "\t\"-c\" to display division in console\n"
