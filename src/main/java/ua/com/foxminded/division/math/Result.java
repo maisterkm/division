@@ -6,15 +6,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class Result {
-    @Getter
-    @Setter
     private int dividend;
-    @Getter
-    @Setter
     private int divisor;
-    @Getter
-    @Setter
     private int firstPartialDividend;
 
     @Getter(AccessLevel.NONE)
