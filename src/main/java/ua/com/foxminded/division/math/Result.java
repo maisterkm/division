@@ -57,6 +57,16 @@ public class Result {
         return str;
     }
 
+    public ArrayList<Integer> getQuotientAsArray() {
+        ArrayList<Integer> tmpArr = new ArrayList<Integer>();
+        for (Step step : arrayOfSteps) {
+            for (int item : step.digitsOfQuotient) {
+                tmpArr.add(item);
+            }
+        }
+        return tmpArr;
+    }
+
     public int countDigitsInArray(ArrayList<Integer> array) {
         int counter = 0;
         for (int item : array) {
