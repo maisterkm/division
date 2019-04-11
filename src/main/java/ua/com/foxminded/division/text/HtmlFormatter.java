@@ -7,26 +7,59 @@ import ua.com.foxminded.division.math.Result;
 
 public class HtmlFormatter implements Formatter {
     private Result result;
-    String jQueryCode = "$(document).ready(function(){\n" + "    $(\".step-0\").click(function(){\n"
-            + "        $(\".step-0\").css(\"color\", \"red\");\n" + "    });\n" + "    \n"
-            + "    $(\".step-1\").click(function(){\n" + "        $(\".step-1\").css(\"color\", \"red\");\n"
-            + "    });\n" + "    \n" + "    $(\".step-2\").click(function(){\n"
-            + "        $(\".step-2\").css(\"color\", \"red\");\n" + "    });\n" + "    \n"
-            + "    $(\".step-3\").click(function(){\n" + "        $(\".step-3\").css(\"color\", \"red\");\n"
-            + "    });\n" + "    \n" + "    $(\".step-4\").click(function(){\n"
-            + "        $(\".step-4\").css(\"color\", \"red\");\n" + "    });\n" + "    \n"
-            + "    $(\".step-5\").click(function(){\n" + "        $(\".step-\").css(\"color\", \"red\");\n"
-            + "    });\n" + "    \n" + "    $(\".step-6\").click(function(){\n"
-            + "        $(\".step-6\").css(\"color\", \"red\");\n" + "    });\n" + "    \n"
-            + "    $(\".step-7\").click(function(){\n" + "        $(\".step-7\").css(\"color\", \"red\");\n"
-            + "    });\n" + "    $(\".step-8\").click(function(){\n"
-            + "        $(\".step-8\").css(\"color\", \"red\");\n" + "    });\n" + "});";
+    String jQueryCode = "$(document).ready(function(){\r\n" + "    $(\".step-0\").click(function(){\r\n"
+            + "        $(\".step-0\").css(\"color\", \"red\");\r\n"
+            + "        $(\".step-1\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-2\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-3\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-4\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-5\").css(\"color\", \"black\");\r\n" + "    });\r\n" + "    \r\n"
+            + "    $(\".step-1\").click(function(){\r\n" + "        $(\".step-0\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-1\").css(\"color\", \"red\");\r\n"
+            + "        $(\".step-2\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-3\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-4\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-5\").css(\"color\", \"black\");\r\n" + "    });\r\n" + "    \r\n"
+            + "    $(\".step-2\").click(function(){\r\n" + "        $(\".step-0\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-1\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-2\").css(\"color\", \"red\");\r\n"
+            + "        $(\".step-3\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-4\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-5\").css(\"color\", \"black\");\r\n" + "    });\r\n" + "    \r\n"
+            + "    $(\".step-3\").click(function(){\r\n" + "        $(\".step-0\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-1\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-2\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-3\").css(\"color\", \"red\");\r\n"
+            + "        $(\".step-4\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-5\").css(\"color\", \"black\");\r\n" + "    });\r\n" + "    \r\n"
+            + "    $(\".step-4\").click(function(){\r\n" + "        $(\".step-0\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-1\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-2\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-3\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-4\").css(\"color\", \"red\");\r\n"
+            + "        $(\".step-5\").css(\"color\", \"black\");\r\n" + "    });\r\n" + "    \r\n"
+            + "    $(\".step-5\").click(function(){\r\n" + "        $(\".step-0\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-1\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-2\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-3\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-4\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-5\").css(\"color\", \"red\");\r\n" + "    });\r\n" + "    \r\n"
+            + "    $(\".step-6\").click(function(){\r\n" + "        $(\".step-0\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-1\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-2\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-3\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-4\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-5\").css(\"color\", \"black\");\r\n"
+            + "        $(\".step-6\").css(\"color\", \"red\");\r\n" + "    });\r\n" + "    \r\n"
+            + "    $(\".step-7\").click(function(){\r\n" + "        $(\".step-0\").css(\"color\", \"red\");\r\n"
+            + "    });\r\n" + "    $(\".step-8\").click(function(){\r\n"
+            + "        $(\".step-0\").css(\"color\", \"red\");\r\n" + "    });\r\n" + "});";
     String output = "<html>\n<title>Division</title>\n"
             + "<head><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>"
-            + "<script>" + jQueryCode + "</script>" + "</head>" + "<body>\n" + "<style>\n" + "\n" + "span.item {\n"
-            + "    display: inline-block;\n" + "    border: 1px solid green;\n" + "    text-align: center;\n"
+            + "<script>" + jQueryCode + "</script>" + "<style>\n" + "\n" + "span.item {\n"
+            + "    display: inline-block;\n" + "   /* border: 1px solid green; */\n" + "    text-align: center;\n"
             + "    height: 25px;\n" + "    width: 25px; \n" + "    margin: 1px;\n" + "}\n"
-            + "span.quotient:hover {color: red;}\n" + "</style>";
+            + "span.quotient:hover {color: red;}\n" + "</style>" + "</head>" + "<body>\n";
     private int positionsBeforProduct = 0;
     private int positionBiforeIntegralPartialDividend = 1;
     private ArrayList<Integer> arrDivisor = new ArrayList<Integer>();
@@ -79,7 +112,7 @@ public class HtmlFormatter implements Formatter {
     private void concatenateFirstStep() {
         output += "<span class=\"item\">_</span>";
         for (int i = 0; i < result.digitsOfDividend.size(); i++) {
-            output += "<span class=\"item step-" + i + "\"\">" + result.digitsOfDividend.get(i) + "</span>";
+            output += "<span class=\"item" + "\">" + result.digitsOfDividend.get(i) + "</span>";
         }
         output += "<span class=\"item\">|</span>";
         arrDivisor.clear();
