@@ -7,11 +7,26 @@ import ua.com.foxminded.division.math.Result;
 
 public class HtmlFormatter implements Formatter {
     private Result result;
+    String jQueryCode = "$(document).ready(function(){\n" + "    $(\".step-0\").click(function(){\n"
+            + "        $(\".step-0\").css(\"color\", \"red\");\n" + "    });\n" + "    \n"
+            + "    $(\".step-1\").click(function(){\n" + "        $(\".step-1\").css(\"color\", \"red\");\n"
+            + "    });\n" + "    \n" + "    $(\".step-2\").click(function(){\n"
+            + "        $(\".step-2\").css(\"color\", \"red\");\n" + "    });\n" + "    \n"
+            + "    $(\".step-3\").click(function(){\n" + "        $(\".step-3\").css(\"color\", \"red\");\n"
+            + "    });\n" + "    \n" + "    $(\".step-4\").click(function(){\n"
+            + "        $(\".step-4\").css(\"color\", \"red\");\n" + "    });\n" + "    \n"
+            + "    $(\".step-5\").click(function(){\n" + "        $(\".step-\").css(\"color\", \"red\");\n"
+            + "    });\n" + "    \n" + "    $(\".step-6\").click(function(){\n"
+            + "        $(\".step-6\").css(\"color\", \"red\");\n" + "    });\n" + "    \n"
+            + "    $(\".step-7\").click(function(){\n" + "        $(\".step-7\").css(\"color\", \"red\");\n"
+            + "    });\n" + "    $(\".step-8\").click(function(){\n"
+            + "        $(\".step-8\").css(\"color\", \"red\");\n" + "    });\n" + "});";
     String output = "<html>\n<title>Division</title>\n"
             + "<head><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>"
-            + "</head>" + "<body>\n" + "<style>\n" + "\n" + "span.item {\n" + "    display: inline-block;\n"
-            + "    border: 1px solid green;\n" + "    text-align: center;\n" + "    height: 25px;\n"
-            + "    width: 25px; \n" + "    margin: 1px;\n" + "}\n" + "span.quotient:hover {color: red;}\n" + "</style>";
+            + "<script>" + jQueryCode + "</script>" + "</head>" + "<body>\n" + "<style>\n" + "\n" + "span.item {\n"
+            + "    display: inline-block;\n" + "    border: 1px solid green;\n" + "    text-align: center;\n"
+            + "    height: 25px;\n" + "    width: 25px; \n" + "    margin: 1px;\n" + "}\n"
+            + "span.quotient:hover {color: red;}\n" + "</style>";
     private int positionsBeforProduct = 0;
     private int positionBiforeIntegralPartialDividend = 1;
     private ArrayList<Integer> arrDivisor = new ArrayList<Integer>();
@@ -286,7 +301,7 @@ public class HtmlFormatter implements Formatter {
         Collections.reverse(tmpArr);
 
         for (int j = 0; j < tmpArr.size(); j++) {
-            str += "<span class=\"item step-" + i + "\"\">" + tmpArr.get(j) + "</span>";
+            str += "<span class=\"item step-" + i + "\">" + tmpArr.get(j) + "</span>";
         }
         return str;
     }
@@ -306,7 +321,7 @@ public class HtmlFormatter implements Formatter {
         Collections.reverse(tmpArr);
 
         for (int j = 0; j < tmpArr.size(); j++) {
-            str += "<span class=\"item step-" + i + "\"\">" + tmpArr.get(j) + "</span>";
+            str += "<span class=\"item step-" + i + "\">" + tmpArr.get(j) + "</span>";
         }
         return str;
     }
