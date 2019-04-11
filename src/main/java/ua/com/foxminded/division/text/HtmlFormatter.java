@@ -7,16 +7,14 @@ import ua.com.foxminded.division.math.Result;
 
 public class HtmlFormatter implements Formatter {
     private Result result;
-    String output = "<html>\n<title>Division</title>\n<body>\n" + "<style>\n" + "\n" + "span.item {\n"
-            + "    display: inline-block;\n" + "    border: 1px solid green;\n" + "    text-align: center;\n"
-            + "    height: 25px;\n" + "    width: 25px; \n" + "    margin: 1px;\n" + "}\n"
-            + "span.quotient:hover {color: red;}\n" + "</style>";
+    String output = "<html>\n<title>Division</title>\n"
+            + "<head><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>"
+            + "</head>" + "<body>\n" + "<style>\n" + "\n" + "span.item {\n" + "    display: inline-block;\n"
+            + "    border: 1px solid green;\n" + "    text-align: center;\n" + "    height: 25px;\n"
+            + "    width: 25px; \n" + "    margin: 1px;\n" + "}\n" + "span.quotient:hover {color: red;}\n" + "</style>";
     private int positionsBeforProduct = 0;
     private int positionBiforeIntegralPartialDividend = 1;
     private ArrayList<Integer> arrDivisor = new ArrayList<Integer>();
-    private ArrayList<Integer> arrProduct = new ArrayList<Integer>();
-    private ArrayList<Integer> arrIntegralPartialDividend = new ArrayList<Integer>();
-    private ArrayList<Integer> arrRemainder = new ArrayList<Integer>();
 
     public String format(Result r) {
         result = r;
@@ -35,11 +33,7 @@ public class HtmlFormatter implements Formatter {
             for (int i = 0; i < positionsBeforProduct; i++) {
                 output += "<span class=\"item\">&nbsp;</span>";
             }
-            arrProduct.clear();
-            arrProduct = splitProducToDigits(j);
-            for (int i : arrProduct) {
-                output += "<span class=\"item\">" + i + "</span>"; /////////////////
-            }
+            output += insertProducInSpan(j);
             output += "<br>";
             for (int i = 0; i < positionsBeforProduct; i++) {
                 output += "<span class=\"item\">&nbsp;</span>";
@@ -55,19 +49,11 @@ public class HtmlFormatter implements Formatter {
             }
             if (j < result.arrayOfSteps.size() - 1) {
                 output += "<span class=\"item\">_</span>";
-                arrIntegralPartialDividend.clear(); //////////////////////////////////////////////////////////////
-                arrIntegralPartialDividend = splitIntegralPartialDividendToDigits(j); //////////////////////////
-                for (int i : arrIntegralPartialDividend) { /////////////////////////////////////////////////////
-                    output += "<span class=\"item\">" + i + "</span>"; /////////////////////////////////////////
-                } ///////////////////////////////////////////////////////////////////////////////////////////////
+                output += insertIntegralPartialDividendInSpan(j);
                 output += "<br>";
             } else {
                 output += "<span class=\"item\">&nbsp;</span>";
-                arrRemainder.clear();
-                arrRemainder = splitRemainderToDigits(j);
-                for (int i : arrRemainder) {
-                    output += "<span class=\"item\">" + i + "</span>";
-                }
+                output += insertRemainderInSpan(j);
             }
             j++;
         }
@@ -77,11 +63,10 @@ public class HtmlFormatter implements Formatter {
 
     private void concatenateFirstStep() {
         output += "<span class=\"item\">_</span>";
-        for (int i : result.digitsOfDividend) {
-            output += "<span class=\"item\">" + i + "</span>";
+        for (int i = 0; i < result.digitsOfDividend.size(); i++) {
+            output += "<span class=\"item step-" + i + "\"\">" + result.digitsOfDividend.get(i) + "</span>";
         }
         output += "<span class=\"item\">|</span>";
-//        + result.getDivisor() + "</span><br>";
         arrDivisor.clear();
         arrDivisor = splitDivisorToDigits();
         for (int i : arrDivisor) {
@@ -93,10 +78,7 @@ public class HtmlFormatter implements Formatter {
         for (int i = 0; i < positionsBeforProduct; i++) {
             output += "<span class=\"item\">&nbsp;</span>";
         }
-        arrProduct = splitProducToDigits(0);
-        for (int i : arrProduct) {
-            output += "<span class=\"item\">" + i + "</span>";
-        }
+        output += insertProducInSpan(0);
         if (result.countDigitsInProduct(0) + positionsBeforProduct < result.digitsOfDividend.size()) {
             for (int i = 0; i < result.digitsOfDividend.size() - result.countDigitsInProduct(0)
                     - positionsBeforProduct; i++) {
@@ -122,10 +104,7 @@ public class HtmlFormatter implements Formatter {
             }
         }
         output += "<span class=\"item\">|</span>";
-        ArrayList<Integer> arrQuotient = result.getQuotientAsArray();
-        for (int i : arrQuotient) {
-            output += "<span class=\"item quotient\">" + i + "</span>";
-        }
+        output += insertQuotientInSpan();
         output += "<br>";
         if (result.arrayOfSteps.size() <= 2 && result.arrayOfSteps.get(0).getIntegralPartialDividend() != 0) {
             concatenateIfIntegralPartialDividendNotZero();
@@ -161,26 +140,13 @@ public class HtmlFormatter implements Formatter {
             output += "<span class=\"item\">&nbsp;</span>";
         }
         if (result.digitsOfDividend.size() - result.countDigitsInArray(result.partialDividend) + 1 == 1) {
-//            output += result.arrayOfSteps.get(0).getIntegralPartialDividend();
-            arrIntegralPartialDividend.clear();
-            arrIntegralPartialDividend = splitIntegralPartialDividendToDigits(0);
-            for (int i : arrIntegralPartialDividend) {
-                output += "<span class=\"item\">" + i + "</span>";
-            }
+            output += insertIntegralPartialDividendInSpan(0);
         } else if (result.getValueOfLastIntegralPartialDividend() == 0) { // without minus
             output += "<span class=\"item\">&nbsp;</span>";
-            arrProduct.clear();
-            arrProduct = splitProducToDigits(1);
-            for (int i : arrProduct) {
-                output += "<span class=\"item\">" + i + "</span>";
-            }
+            output += insertProducInSpan(1);
         } else {
             output += "<span class=\"item\">_</span>";
-            arrProduct.clear();
-            arrProduct = splitProducToDigits(1);
-            for (int i : arrProduct) {
-                output += "<span class=\"item\">" + i + "</span>";
-            }
+            output += insertProducInSpan(1);
         }
         output += "<br>" + "<span class=\"item\">&nbsp;</span>";
         for (int i = 0; i < positionsBeforProduct; i++) {
@@ -194,11 +160,7 @@ public class HtmlFormatter implements Formatter {
         for (int i = 0; i < positionsBeforProduct; i++) {
             output += "<span class=\"item\">&nbsp;</span>";
         }
-        arrRemainder.clear();
-        arrRemainder = splitRemainderToDigits(1);
-        for (int i : arrRemainder) {
-            output += "<span class=\"item\">" + i + "</span>";
-        }
+        output += insertRemainderInSpan(1);
     }
 
     private void concatenateIfIntegralPartialDividendNotZero() {
@@ -229,31 +191,16 @@ public class HtmlFormatter implements Formatter {
             output += "<span class=\"item\">&nbsp;</span>";
         }
         if (result.arrayOfSteps.size() > 1) {
-//            output += "<span class=\"item\">_</span>" + result.arrayOfSteps.get(0).getIntegralPartialDividend();
             output += "<span class=\"item\">_</span>";
-            arrIntegralPartialDividend.clear();
-            arrIntegralPartialDividend = splitIntegralPartialDividendToDigits(0);
-            for (int i : arrIntegralPartialDividend) {
-                output += "<span class=\"item\">" + i + "</span>";
-            }
+            output += insertIntegralPartialDividendInSpan(0);
         } else {
             if (result.arrayOfSteps.get(0).getRemainder() == 0) {
-//                output += result.arrayOfSteps.get(0).getIntegralPartialDividend();
-                arrIntegralPartialDividend.clear();
-                arrIntegralPartialDividend = splitIntegralPartialDividendToDigits(0);
-                for (int i : arrIntegralPartialDividend) {
-                    output += "<span class=\"item\">" + i + "</span>";
-                }
+                output += insertIntegralPartialDividendInSpan(0);
             } else {
                 for (int i = 0; i < result.countDigitsInProduct(0) - result.countDigitsInRemainder(0); i++) {
                     output += "<span class=\"item\">&nbsp;</span>";
                 }
-//                output += result.arrayOfSteps.get(0).getIntegralPartialDividend();
-                arrIntegralPartialDividend.clear();
-                arrIntegralPartialDividend = splitIntegralPartialDividendToDigits(0);
-                for (int i : arrIntegralPartialDividend) {
-                    output += "<span class=\"item\">" + i + "</span>";
-                }
+                output += insertIntegralPartialDividendInSpan(0);
             }
         }
     }
@@ -263,11 +210,7 @@ public class HtmlFormatter implements Formatter {
         for (int i = 0; i < positionsBeforProduct; i++) {
             output += "<span class=\"item\">&nbsp;</span>";
         }
-        arrRemainder.clear();
-        arrRemainder = splitRemainderToDigits(0);
-        for (int i : arrRemainder) {
-            output += "<span class=\"item\">" + i + "</span>";
-        }
+        output += insertRemainderInSpan(0);
     }
 
     private ArrayList<Integer> splitDivisorToDigits() {
@@ -285,7 +228,30 @@ public class HtmlFormatter implements Formatter {
         return tmpArr;
     }
 
-    private ArrayList<Integer> splitProducToDigits(int i) {
+    private String insertQuotientInSpan() {
+        String str = "";
+        ArrayList<ArrayList<Integer>> tmpQuotientArr = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i < result.arrayOfSteps.size(); i++) {
+            tmpQuotientArr.add(new ArrayList<Integer>());
+        }
+
+        for (int i = 0; i < result.arrayOfSteps.size(); i++) {
+            for (int j = 0; j < result.arrayOfSteps.get(i).digitsOfQuotient.size(); j++) {
+                tmpQuotientArr.get(i).add(result.arrayOfSteps.get(i).digitsOfQuotient.get(j));
+            }
+        }
+
+        for (int i = 0; i < tmpQuotientArr.size(); i++) {
+            for (int j = 0; j < tmpQuotientArr.get(i).size(); j++) {
+                str += "<span class=\"item step-" + i + " quotient\">" + tmpQuotientArr.get(i).get(j) + "</span>";
+            }
+        }
+
+        return str;
+    }
+
+    private String insertProducInSpan(int i) {
+        String str = "";
         ArrayList<Integer> tmpArr = new ArrayList<Integer>();
         if (result.arrayOfSteps.get(i).getProduct() == 0) {
             tmpArr.add(0);
@@ -297,10 +263,16 @@ public class HtmlFormatter implements Formatter {
             product /= j;
         }
         Collections.reverse(tmpArr);
-        return tmpArr;
+
+        for (int j = 0; j < tmpArr.size(); j++) {
+            str += "<span class=\"item step-" + i + "\">" + tmpArr.get(j) + "</span>";
+        }
+
+        return str;
     }
 
-    private ArrayList<Integer> splitIntegralPartialDividendToDigits(int i) {
+    private String insertIntegralPartialDividendInSpan(int i) {
+        String str = "";
         ArrayList<Integer> tmpArr = new ArrayList<Integer>();
         if (result.arrayOfSteps.get(i).getIntegralPartialDividend() == 0) {
             tmpArr.add(0);
@@ -312,10 +284,15 @@ public class HtmlFormatter implements Formatter {
             integralPartialDividend /= j;
         }
         Collections.reverse(tmpArr);
-        return tmpArr;
+
+        for (int j = 0; j < tmpArr.size(); j++) {
+            str += "<span class=\"item step-" + i + "\"\">" + tmpArr.get(j) + "</span>";
+        }
+        return str;
     }
 
-    private ArrayList<Integer> splitRemainderToDigits(int i) {
+    private String insertRemainderInSpan(int i) {
+        String str = "";
         ArrayList<Integer> tmpArr = new ArrayList<Integer>();
         if (result.arrayOfSteps.get(i).getRemainder() == 0) {
             tmpArr.add(0);
@@ -327,19 +304,10 @@ public class HtmlFormatter implements Formatter {
             remainder /= j;
         }
         Collections.reverse(tmpArr);
-        return tmpArr;
+
+        for (int j = 0; j < tmpArr.size(); j++) {
+            str += "<span class=\"item step-" + i + "\"\">" + tmpArr.get(j) + "</span>";
+        }
+        return str;
     }
-
-//    public String format(Result result) {
-//        String output = "";
-//        output += "<html>\n<title>Division</title>\n<body>\n<pre>\n";
-//
-//        Formatter formatter = new ClassicFormatter();
-//        output += formatter.format(result);
-//
-//        output += "\n</pre>\n</body>\n</html>";
-//
-//        return output;
-//    }
-
 }
