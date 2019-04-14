@@ -160,11 +160,11 @@ public class Divider {
 
             while (Integer.parseInt(tempString) <= divisor && indexDigitsOfDividend < result.digitsOfDividend.size()) {
                 tempString += Integer.toString(result.digitsOfDividend.get(indexDigitsOfDividend));
+                if (step.getRemainder() == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) {
+                    step.digitsOfQuotient.add(0);
+                    shiftDigit = true;
+                }
                 indexDigitsOfDividend++;
-            }
-            if (step.getRemainder() == 0 && indexDigitsOfDividend == result.digitsOfDividend.size()) {
-                step.digitsOfQuotient.add(0);
-                shiftDigit = true;
             }
             return Integer.parseInt(tempString);
         }
