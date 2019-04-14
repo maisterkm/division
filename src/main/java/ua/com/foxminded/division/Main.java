@@ -20,14 +20,14 @@ public class Main {
         }
 
         if (args[2].contentEquals("-c")) {
-            Result result = initializationOfResult(args[0], args[1]);
+            Result result = divide(args[0], args[1]);
             Formatter formatter = new ClassicFormatter();
             String output = formatter.format(result);
             System.out.printf(output);
         }
 
         if (args[2].equals("-h")) {
-            Result result = initializationOfResult(args[0], args[1]);
+            Result result = divide(args[0], args[1]);
             Formatter formatter = new HtmlFormatter();
             String output = formatter.format(result);
             System.out.printf(output);
@@ -42,14 +42,14 @@ public class Main {
         }
 
         if (args[2].equals("-j")) {
-            Result result = initializationOfResult(args[0], args[1]);
+            Result result = divide(args[0], args[1]);
             Formatter formatter = new JsonFormatter();
             String output = formatter.format(result);
             System.out.printf(output);
         }
     }
 
-    private static Result initializationOfResult(String arg1, String arg2) {
+    private static Result divide(String arg1, String arg2) {
         int dividend = Integer.parseInt(arg1);
         int divisor = Integer.parseInt(arg2);
         Divider divider = new Divider();
