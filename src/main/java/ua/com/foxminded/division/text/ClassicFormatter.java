@@ -32,8 +32,17 @@ public class ClassicFormatter implements Formatter {
                 output += "-";
             }
             output += "\n";
-            positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
-                    - result.countDigitsInRemainder(j) - 1;
+//            positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
+//                    - result.countDigitsInRemainder(j) - 1;
+            if (result.countDigitsInProduct(j) == 1 && result.arrayOfSteps.get(j).getRemainder() == 0
+                    && result.arrayOfSteps.size() - 1 != j) {
+                positionsBeforProduct++;
+                positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
+                        - result.countDigitsInRemainder(j) - 1;
+            } else {
+                positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
+                        - result.countDigitsInRemainder(j) - 1;
+            }
             for (int i = 0; i < positionBiforeIntegralPartialDividend; i++) {
                 output += " ";
             }

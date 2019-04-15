@@ -7,9 +7,9 @@ import ua.com.foxminded.division.math.Result;
 
 public class HtmlFormatter implements Formatter {
     private Result result;
-    String output = "<html>\n<title>Division</title>\n"
+    String output = "<html><title>Division</title>"
             + "<head><link rel=\"stylesheet\" href=\"styles.css\"><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>"
-            + "<script src=\"javascript.js\"></script>" + "</head>" + "<body>\n";
+            + "<script src=\"javascript.js\"></script>" + "</head>" + "<body>";
     private int positionsBeforProduct = 0;
     private int positionBiforeIntegralPartialDividend = 1;
     private ArrayList<Integer> arrDivisor = new ArrayList<Integer>();
@@ -18,7 +18,7 @@ public class HtmlFormatter implements Formatter {
         result = r;
         if (result.arrayOfSteps.size() <= 2) {
             concatenateFirstStep();
-            output += "\n</body>\n</html>";
+            output += "</body></html>";
             return output;
         } else {
             concatenateFirstStep();
@@ -40,8 +40,17 @@ public class HtmlFormatter implements Formatter {
                 output += "<span class=\"item\">-</span>";
             }
             output += "<br>";
-            positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
-                    - result.countDigitsInRemainder(j) - 1;
+//            positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
+//                    - result.countDigitsInRemainder(j) - 1;
+            if (result.countDigitsInProduct(j) == 1 && result.arrayOfSteps.get(j).getRemainder() == 0
+                    && result.arrayOfSteps.size() - 1 != j) {
+                positionsBeforProduct++;
+                positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
+                        - result.countDigitsInRemainder(j) - 1;
+            } else {
+                positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
+                        - result.countDigitsInRemainder(j) - 1;
+            }
             for (int i = 0; i < positionBiforeIntegralPartialDividend; i++) {
                 output += "<span class=\"item\">&nbsp;</span>";
             }
@@ -55,7 +64,7 @@ public class HtmlFormatter implements Formatter {
             }
             j++;
         }
-        output += "\n</body>\n</html>";
+        output += "</body></html>";
         return output;
     }
 
