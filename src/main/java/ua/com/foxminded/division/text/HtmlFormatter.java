@@ -40,8 +40,6 @@ public class HtmlFormatter implements Formatter {
                 output += "<span class=\"item\">-</span>";
             }
             output += "<br>";
-//            positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
-//                    - result.countDigitsInRemainder(j) - 1;
             if (result.countDigitsInProduct(j) == 1 && result.arrayOfSteps.get(j).getRemainder() == 0
                     && result.arrayOfSteps.size() - 1 != j) {
                 positionsBeforProduct++;
