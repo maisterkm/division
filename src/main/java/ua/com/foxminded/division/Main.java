@@ -6,10 +6,7 @@ import java.io.IOException;
 
 import ua.com.foxminded.division.math.Divider;
 import ua.com.foxminded.division.math.Result;
-import ua.com.foxminded.division.text.ClassicFormatter;
 import ua.com.foxminded.division.text.Formatter;
-import ua.com.foxminded.division.text.HtmlFormatter;
-import ua.com.foxminded.division.text.JsonFormatter;
 
 public class Main {
 
@@ -19,41 +16,21 @@ public class Main {
             System.exit(1);
         }
 
-        if (args[2].contentEquals("-c")) {
-            Result result = divide(args[0], args[1]);
-            Formatter formatter = new ClassicFormatter();
-            String output = formatter.format(result);
-            System.out.printf(output);
-        }
+        Divider divider = new Divider();
+        Result result = divider.divide(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+        Factory factory = new Factory();
+        Formatter formatter = factory.getFormatter(args[2]);
+        String output = formatter.format(result);
+        System.out.printf(output);
 
         if (args[2].equals("-h")) {
-            Result result = divide(args[0], args[1]);
-            Formatter formatter = new HtmlFormatter();
-            String output = formatter.format(result);
-            System.out.printf(output);
-
             File file = new File("index.html");
             file.createNewFile();
             FileWriter writer = new FileWriter(file);
             writer.write(output);
             writer.flush();
             writer.close();
-
         }
-
-        if (args[2].equals("-j")) {
-            Result result = divide(args[0], args[1]);
-            Formatter formatter = new JsonFormatter();
-            String output = formatter.format(result);
-            System.out.printf(output);
-        }
-    }
-
-    private static Result divide(String arg1, String arg2) {
-        int dividend = Integer.parseInt(arg1);
-        int divisor = Integer.parseInt(arg2);
-        Divider divider = new Divider();
-        return divider.divide(dividend, divisor);
     }
 
     private static void printWrongArgument() {
