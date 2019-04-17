@@ -12,6 +12,8 @@ public class Result {
     private int dividend;
     private int divisor;
     private int firstPartialDividend;
+    private int positionsBeforProduct = 0;
+    private int positionBiforeIntegralPartialDividend = 1;
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)

@@ -5,8 +5,6 @@ import ua.com.foxminded.division.math.Result;
 public class ClassicFormatter implements Formatter {
     private Result result;
     private String output = "";
-    private int positionsBeforProduct = 0;
-    private int positionBiforeIntegralPartialDividend = 1;
 
     public String format(Result r) {
         result = r;
@@ -18,14 +16,14 @@ public class ClassicFormatter implements Formatter {
         }
         output += "\n";
         int j = 1;
-        positionsBeforProduct = positionBiforeIntegralPartialDividend;
+        result.setPositionsBeforProduct(result.getPositionBiforeIntegralPartialDividend());
         while (j < result.arrayOfSteps.size()) {
-            positionsBeforProduct = positionBiforeIntegralPartialDividend + 1;
-            for (int i = 0; i < positionsBeforProduct; i++) {
+            result.setPositionsBeforProduct(result.getPositionBiforeIntegralPartialDividend() + 1);
+            for (int i = 0; i < result.getPositionsBeforProduct(); i++) {
                 output += " ";
             }
             output += result.arrayOfSteps.get(j).getProduct() + "\n";
-            for (int i = 0; i < positionsBeforProduct; i++) {
+            for (int i = 0; i < result.getPositionsBeforProduct(); i++) {
                 output += " ";
             }
             for (int i = 0; i < result.countDigitsInProduct(j); i++) {
@@ -34,14 +32,14 @@ public class ClassicFormatter implements Formatter {
             output += "\n";
             if (result.countDigitsInProduct(j) == 1 && result.arrayOfSteps.get(j).getRemainder() == 0
                     && result.arrayOfSteps.size() - 1 != j) {
-                positionsBeforProduct++;
-                positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
-                        - result.countDigitsInRemainder(j) - 1;
+                result.setPositionsBeforProduct(result.getPositionsBeforProduct() + 1);
+                result.setPositionBiforeIntegralPartialDividend(result.getPositionsBeforProduct()
+                        + result.countDigitsInProduct(j) - result.countDigitsInRemainder(j) - 1);
             } else {
-                positionBiforeIntegralPartialDividend = positionsBeforProduct + result.countDigitsInProduct(j)
-                        - result.countDigitsInRemainder(j) - 1;
+                result.setPositionBiforeIntegralPartialDividend(result.getPositionsBeforProduct()
+                        + result.countDigitsInProduct(j) - result.countDigitsInRemainder(j) - 1);
             }
-            for (int i = 0; i < positionBiforeIntegralPartialDividend; i++) {
+            for (int i = 0; i < result.getPositionBiforeIntegralPartialDividend(); i++) {
                 output += " ";
             }
             if (j < result.arrayOfSteps.size() - 1) {
@@ -56,15 +54,16 @@ public class ClassicFormatter implements Formatter {
 
     private void concatenateFirstStep() {
         output = "_" + result.getDividend() + "|" + result.getDivisor() + "\n";
-        positionsBeforProduct = result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0);
+        result.setPositionsBeforProduct(
+                result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0));
         output += " ";
-        for (int i = 0; i < positionsBeforProduct; i++) {
+        for (int i = 0; i < result.getPositionsBeforProduct(); i++) {
             output += " ";
         }
         output += Integer.toString(result.arrayOfSteps.get(0).getProduct());
-        if (result.countDigitsInProduct(0) + positionsBeforProduct < result.digitsOfDividend.size()) {
+        if (result.countDigitsInProduct(0) + result.getPositionsBeforProduct() < result.digitsOfDividend.size()) {
             for (int i = 0; i < result.digitsOfDividend.size() - result.countDigitsInProduct(0)
-                    - positionsBeforProduct; i++) {
+                    - result.getPositionsBeforProduct(); i++) {
                 output += " ";
             }
         }
@@ -74,15 +73,15 @@ public class ClassicFormatter implements Formatter {
         }
         output += "\n";
         output += " ";
-        for (int i = 0; i < positionsBeforProduct; i++) {
+        for (int i = 0; i < result.getPositionsBeforProduct(); i++) {
             output += " ";
         }
         for (int i = 0; i < result.countDigitsInProduct(0); i++) {
             output += "-";
         }
-        if (result.countDigitsInProduct(0) + positionsBeforProduct < result.digitsOfDividend.size()) {
+        if (result.countDigitsInProduct(0) + result.getPositionsBeforProduct() < result.digitsOfDividend.size()) {
             for (int i = 0; i < result.digitsOfDividend.size() - result.countDigitsInProduct(0)
-                    - positionsBeforProduct; i++) {
+                    - result.getPositionsBeforProduct(); i++) {
                 output += " ";
             }
         }
@@ -106,20 +105,9 @@ public class ClassicFormatter implements Formatter {
     }
 
     private void concatenateIfIntegralPartialDividendMoreOne() {
-        switch (result.countDigitsInIntegralPartialDividend(0)) {
-        case (1):
-            if (result.countDigitsInProduct(0) == 2) {
-                positionBiforeIntegralPartialDividend += 1;
-            }
-            break;
-        case (2):
-        case (3):
-            positionsBeforProduct = positionBiforeIntegralPartialDividend
-                    + (result.countDigitsInIntegralPartialDividend(0) - result.countDigitsInProduct(1));
-            break;
-        }
+        getPositionBeforProduct(result);
         output += "\n";
-        for (int i = 0; i < positionsBeforProduct; i++) {
+        for (int i = 0; i < result.getPositionsBeforProduct(); i++) {
             output += " ";
         }
         if (result.digitsOfDividend.size() - result.countDigitsInArray(result.partialDividend) + 1 == 1) {
@@ -130,15 +118,16 @@ public class ClassicFormatter implements Formatter {
             output += "_" + result.arrayOfSteps.get(1).getProduct();
         }
         output += "\n ";
-        for (int i = 0; i < positionsBeforProduct; i++) {
+        for (int i = 0; i < result.getPositionsBeforProduct(); i++) {
             output += " ";
         }
         for (int i = 0; i < result.countDigitsInProduct(1); i++) {
             output += "-";
         }
         output += "\n";
-        positionsBeforProduct += 1 + result.countDigitsInProduct(1) - result.countDigitsInRemainder(1);
-        for (int i = 0; i < positionsBeforProduct; i++) {
+        result.setPositionsBeforProduct(result.getPositionsBeforProduct() + 1 + result.countDigitsInProduct(1)
+                - result.countDigitsInRemainder(1));
+        for (int i = 0; i < result.getPositionsBeforProduct(); i++) {
             output += " ";
         }
         output += result.arrayOfSteps.get(1).getRemainder();
@@ -147,28 +136,30 @@ public class ClassicFormatter implements Formatter {
     private void concatenateIfIntegralPartialDividendNotZero() {
         if (result.arrayOfSteps.get(0).getRemainder() != 0) {
             if (result.countDigitsInProduct(0) == 2 && result.countDigitsInIntegralPartialDividend(0) == 3) {
-                positionBiforeIntegralPartialDividend = Math
-                        .abs(result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0));
+                result.setPositionBiforeIntegralPartialDividend(
+                        Math.abs(result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0)));
             } else if (result.countDigitsInArray(result.partialDividend) > result.countDigitsInProduct(0)) {
-                positionBiforeIntegralPartialDividend = Math
-                        .abs(result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0));
+                result.setPositionBiforeIntegralPartialDividend(
+                        Math.abs(result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0)));
             } else {
-                positionBiforeIntegralPartialDividend = Math
-                        .abs(result.countDigitsInProduct(0) - result.countDigitsInRemainder(0));
+                result.setPositionBiforeIntegralPartialDividend(
+                        Math.abs(result.countDigitsInProduct(0) - result.countDigitsInRemainder(0)));
             }
         }
         if (result.arrayOfSteps.get(0).getRemainder() == 0) {
             if (result.arrayOfSteps.size() == 1 && result.arrayOfSteps.get(0).getIntegralPartialDividend() != 0) {
                 for (int i = 0; i < result.countDigitsInProduct(0); i++) {
-                    positionBiforeIntegralPartialDividend++;
+                    result.setPositionBiforeIntegralPartialDividend(
+                            result.getPositionBiforeIntegralPartialDividend() + 1);
                 }
             } else {
                 for (int i = 0; i < result.countDigitsInProduct(0) - 1; i++) {
-                    positionBiforeIntegralPartialDividend++;
+                    result.setPositionBiforeIntegralPartialDividend(
+                            result.getPositionBiforeIntegralPartialDividend() + 1);
                 }
             }
         }
-        for (int i = 0; i < positionBiforeIntegralPartialDividend; i++) {
+        for (int i = 0; i < result.getPositionBiforeIntegralPartialDividend(); i++) {
             output += " ";
         }
         if (result.arrayOfSteps.size() > 1) {
@@ -186,8 +177,9 @@ public class ClassicFormatter implements Formatter {
     }
 
     private void concatenateIfIntegralPartialDividendZero() {
-        positionsBeforProduct += result.countDigitsInProduct(0) - result.countDigitsInRemainder(0) + 1;
-        for (int i = 0; i < positionsBeforProduct; i++) {
+        result.setPositionsBeforProduct(result.getPositionsBeforProduct() + result.countDigitsInProduct(0)
+                - result.countDigitsInRemainder(0) + 1);
+        for (int i = 0; i < result.getPositionsBeforProduct(); i++) {
             output += " ";
         }
         output += result.arrayOfSteps.get(0).getRemainder();
