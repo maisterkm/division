@@ -83,7 +83,7 @@ public class HtmlFormatter implements Formatter {
             output += "<span class=\"item\">&nbsp;</span>";
         }
         output += insertProducInSpan(0);
-        output += addSpacesToString(result.getPositionsBeforProduct(), result);
+        output += addSpacesToString(result);
         output += "<span class=\"item\">|</span>";
         for (int i = 0; i < result.getTotalSizeDigitsOfQuotient(); i++) {
             output += "<span class=\"item\">-</span>";
@@ -96,7 +96,7 @@ public class HtmlFormatter implements Formatter {
         for (int i = 0; i < result.countDigitsInProduct(0); i++) {
             output += "<span class=\"item\">-</span>";
         }
-        output += addSpacesToString(result.getPositionsBeforProduct(), result);
+        output += addSpacesToString(result);
         output += "<span class=\"item\">|</span>";
         output += insertQuotientInSpan();
         output += "<br>";
@@ -239,62 +239,38 @@ public class HtmlFormatter implements Formatter {
 
     private String insertProducInSpan(int i) {
         String str = "";
-        ArrayList<Integer> tmpArr = new ArrayList<Integer>();
+//        ArrayList<Integer> tmpArr = new ArrayList<Integer>();
         if (result.arrayOfSteps.get(i).getProduct() == 0) {
-            tmpArr.add(0);
+            str += "<span class=\"item step-" + i + "\">" + 0 + "</span>";
+            return str;
         }
         int product = result.arrayOfSteps.get(i).getProduct();
-        for (int j = 10; product % j != 0 || product != 0;) {
-            tmpArr.add(product % j);
-            product = product - (product % j);
-            product /= j;
-        }
-        Collections.reverse(tmpArr);
-
-        for (int item : tmpArr) {
-            str += "<span class=\"item step-" + i + "\">" + item + "</span>";
-        }
-
+        str = splitItemIntoDigits(product, i);
         return str;
     }
 
     private String insertIntegralPartialDividendInSpan(int i) {
         String str = "";
-        ArrayList<Integer> tmpArr = new ArrayList<Integer>();
+//        ArrayList<Integer> tmpArr = new ArrayList<Integer>();
         if (result.arrayOfSteps.get(i).getIntegralPartialDividend() == 0) {
-            tmpArr.add(0);
+            str += "<span class=\"item step-" + i + "\">" + 0 + "</span>";
+            return str;
+//            tmpArr.add(0);
         }
         int integralPartialDividend = result.arrayOfSteps.get(i).getIntegralPartialDividend();
-        for (int j = 10; integralPartialDividend % j != 0 || integralPartialDividend != 0;) {
-            tmpArr.add(integralPartialDividend % j);
-            integralPartialDividend = integralPartialDividend - (integralPartialDividend % j);
-            integralPartialDividend /= j;
-        }
-        Collections.reverse(tmpArr);
-
-        for (int item : tmpArr) {
-            str += "<span class=\"item step-" + i + "\">" + item + "</span>";
-        }
+        str = splitItemIntoDigits(integralPartialDividend, i);
         return str;
     }
 
     private String insertRemainderInSpan(int i) {
         String str = "";
-        ArrayList<Integer> tmpArr = new ArrayList<Integer>();
         if (result.arrayOfSteps.get(i).getRemainder() == 0) {
-            tmpArr.add(0);
+            str += "<span class=\"item step-" + i + "\">" + 0 + "</span>";
+            return str;
         }
         int remainder = result.arrayOfSteps.get(i).getRemainder();
-        for (int j = 10; remainder % j != 0 || remainder != 0;) {
-            tmpArr.add(remainder % j);
-            remainder = remainder - (remainder % j);
-            remainder /= j;
-        }
-        Collections.reverse(tmpArr);
-
-        for (int item : tmpArr) {
-            str += "<span class=\"item step-" + i + "\">" + item + "</span>";
-        }
+        str = splitItemIntoDigits(remainder, i);
         return str;
     }
+
 }

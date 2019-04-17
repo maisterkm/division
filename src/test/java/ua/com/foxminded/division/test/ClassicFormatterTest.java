@@ -153,4 +153,15 @@ public class ClassicFormatterTest {
         String expected = "_512|48\n" + " 48 |--\n" + " -- |10\n" + "  32";
         assertEquals(expected, formatter.format(result));
     }
+
+    @Test
+    public void division123456789By1ShouldReturn123456789() {
+        result = divider.divide(123456789, 1);
+        String expected = "_123456789|1\n" + " 1        |---------\n" + " -        |123456789\n" + " _2\n" + "  2\n"
+                + "  -\n" + "  _3\n" + "   3\n" + "   -\n" + "   _4\n" + "    4\n" + "    -\n" + "    _5\n" + "     5\n"
+                + "     -\n" + "     _6\n" + "      6\n" + "      -\n" + "      _7\n" + "       7\n" + "       -\n"
+                + "       _8\n" + "        8\n" + "        -\n" + "        _9\n" + "         9\n" + "         -\n"
+                + "         0";
+        assertEquals(expected, formatter.format(result));
+    }
 }

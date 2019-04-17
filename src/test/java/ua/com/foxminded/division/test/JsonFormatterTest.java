@@ -187,4 +187,15 @@ public class JsonFormatterTest {
         assertEquals(expected, formatter.format(result));
     }
 
+    @Test
+    public void division123456789By1ShouldReturn123456789() {
+        result = divider.divide(123456789, 1);
+        String expected = "{\n" + "\"dividend\":123456789,\n" + "\"divisor\":1,\n" + "\"partialDividend\":1,\n"
+                + "\"digitsOfDividend\":[1, 2, 3, 4, 5, 6, 7, 8, 9],\n"
+                + "\"digitsOfQuotient\":[1, 2, 3, 4, 5, 6, 7, 8, 9],\n" + "\"product\":[1, 2, 3, 4, 5, 6, 7, 8, 9],\n"
+                + "\"integralPartialDividend\":[2, 3, 4, 5, 6, 7, 8, 9, 0],\n"
+                + "\"remainder\":[0, 0, 0, 0, 0, 0, 0, 0, 0]\n" + "}";
+        assertEquals(expected, formatter.format(result));
+    }
+
 }
