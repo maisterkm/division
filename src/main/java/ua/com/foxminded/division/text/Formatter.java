@@ -49,4 +49,9 @@ public interface Formatter {
         }
         return str;
     }
+
+    default String insertZeroItemInSpan(int i) {
+        return "<span class=\"item step-" + i + "\">" + 0 + "</span>";
+
+    }
 }

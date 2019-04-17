@@ -239,10 +239,8 @@ public class HtmlFormatter implements Formatter {
 
     private String insertProducInSpan(int i) {
         String str = "";
-//        ArrayList<Integer> tmpArr = new ArrayList<Integer>();
         if (result.arrayOfSteps.get(i).getProduct() == 0) {
-            str += "<span class=\"item step-" + i + "\">" + 0 + "</span>";
-            return str;
+            return insertZeroItemInSpan(i);
         }
         int product = result.arrayOfSteps.get(i).getProduct();
         str = splitItemIntoDigits(product, i);
@@ -251,11 +249,8 @@ public class HtmlFormatter implements Formatter {
 
     private String insertIntegralPartialDividendInSpan(int i) {
         String str = "";
-//        ArrayList<Integer> tmpArr = new ArrayList<Integer>();
         if (result.arrayOfSteps.get(i).getIntegralPartialDividend() == 0) {
-            str += "<span class=\"item step-" + i + "\">" + 0 + "</span>";
-            return str;
-//            tmpArr.add(0);
+            return insertZeroItemInSpan(i);
         }
         int integralPartialDividend = result.arrayOfSteps.get(i).getIntegralPartialDividend();
         str = splitItemIntoDigits(integralPartialDividend, i);
@@ -265,8 +260,7 @@ public class HtmlFormatter implements Formatter {
     private String insertRemainderInSpan(int i) {
         String str = "";
         if (result.arrayOfSteps.get(i).getRemainder() == 0) {
-            str += "<span class=\"item step-" + i + "\">" + 0 + "</span>";
-            return str;
+            return insertZeroItemInSpan(i);
         }
         int remainder = result.arrayOfSteps.get(i).getRemainder();
         str = splitItemIntoDigits(remainder, i);
