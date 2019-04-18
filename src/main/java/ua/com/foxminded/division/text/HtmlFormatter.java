@@ -7,8 +7,7 @@ import ua.com.foxminded.division.math.Result;
 
 public class HtmlFormatter implements Formatter {
     private Result result;
-    String output = "<html><title>Division</title>"
-            + "<head><link rel=\"stylesheet\" href=\"styles.css\"><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>"
+    String output = "<html><title>Division</title>" + "<head><link rel=\"stylesheet\" href=\"styles.css\">"
             + "<script src=\"javascript.js\"></script>" + "</head>" + "<body>";
     private ArrayList<Integer> arrDivisor = new ArrayList<Integer>();
 
@@ -230,7 +229,8 @@ public class HtmlFormatter implements Formatter {
 
         for (int i = 0; i < tmpQuotientArr.size(); i++) {
             for (int j = 0; j < tmpQuotientArr.get(i).size(); j++) {
-                str += "<span class=\"item step-" + i + " quotient\">" + tmpQuotientArr.get(i).get(j) + "</span>";
+                str += "<span \" onClick=\"changeColor(this.className)\" class=\"item step-" + i + "\">"
+                        + tmpQuotientArr.get(i).get(j) + "</span>";
             }
         }
 
@@ -266,5 +266,4 @@ public class HtmlFormatter implements Formatter {
         str = splitItemIntoDigits(remainder, i);
         return str;
     }
-
 }

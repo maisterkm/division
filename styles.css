@@ -5,6 +5,7 @@ span.item {
 	height: 15px;
 	width: 12px;
 	margin: 1px;
+	color: black;
 }
 
 span.quotient:hover {
