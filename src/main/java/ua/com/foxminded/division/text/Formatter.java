@@ -52,6 +52,5 @@ public interface Formatter {
 
     default String insertZeroItemInSpan(int i) {
         return "<span class=\"item step-" + i + "\">" + 0 + "</span>";
-
     }
 }

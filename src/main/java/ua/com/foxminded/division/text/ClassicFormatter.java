@@ -2,7 +2,7 @@ package ua.com.foxminded.division.text;
 
 import ua.com.foxminded.division.math.Result;
 
-public class ClassicFormatter implements Formatter {
+public class ClassicFormatter extends ConcatenationIntegralPartialDividend implements Formatter {
     private Result result;
     private String output = "";
 
@@ -89,12 +89,12 @@ public class ClassicFormatter implements Formatter {
         output += result.getQuotientAsString();
         output += "\n";
         if (result.arrayOfSteps.size() <= 2 && result.arrayOfSteps.get(0).getIntegralPartialDividend() != 0) {
-            concatenateIfIntegralPartialDividendNotZero();
+            output += concatenateIfIntegralPartialDividendNotZero(result);
         } else if (result.arrayOfSteps.size() == 1 && result.arrayOfSteps.get(0).getIntegralPartialDividend() == 0) {
             concatenateIfIntegralPartialDividendZero();
         } else if (result.arrayOfSteps.size() > 2) {
             if (result.arrayOfSteps.get(0).getIntegralPartialDividend() != 0) {
-                concatenateIfIntegralPartialDividendNotZero();
+                output += concatenateIfIntegralPartialDividendNotZero(result);
             } else if (result.arrayOfSteps.get(0).getIntegralPartialDividend() == 0) {
                 concatenateIfIntegralPartialDividendZero();
             }
@@ -133,49 +133,6 @@ public class ClassicFormatter implements Formatter {
         output += result.arrayOfSteps.get(1).getRemainder();
     }
 
-    private void concatenateIfIntegralPartialDividendNotZero() {
-        if (result.arrayOfSteps.get(0).getRemainder() != 0) {
-            if (result.countDigitsInProduct(0) == 2 && result.countDigitsInIntegralPartialDividend(0) == 3) {
-                result.setPositionBiforeIntegralPartialDividend(
-                        Math.abs(result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0)));
-            } else if (result.countDigitsInArray(result.partialDividend) > result.countDigitsInProduct(0)) {
-                result.setPositionBiforeIntegralPartialDividend(
-                        Math.abs(result.countDigitsInArray(result.partialDividend) - result.countDigitsInProduct(0)));
-            } else {
-                result.setPositionBiforeIntegralPartialDividend(
-                        Math.abs(result.countDigitsInProduct(0) - result.countDigitsInRemainder(0)));
-            }
-        }
-        if (result.arrayOfSteps.get(0).getRemainder() == 0) {
-            if (result.arrayOfSteps.size() == 1 && result.arrayOfSteps.get(0).getIntegralPartialDividend() != 0) {
-                for (int i = 0; i < result.countDigitsInProduct(0); i++) {
-                    result.setPositionBiforeIntegralPartialDividend(
-                            result.getPositionBiforeIntegralPartialDividend() + 1);
-                }
-            } else {
-                for (int i = 0; i < result.countDigitsInProduct(0) - 1; i++) {
-                    result.setPositionBiforeIntegralPartialDividend(
-                            result.getPositionBiforeIntegralPartialDividend() + 1);
-                }
-            }
-        }
-        for (int i = 0; i < result.getPositionBiforeIntegralPartialDividend(); i++) {
-            output += " ";
-        }
-        if (result.arrayOfSteps.size() > 1) {
-            output += "_" + result.arrayOfSteps.get(0).getIntegralPartialDividend();
-        } else {
-            if (result.arrayOfSteps.get(0).getRemainder() == 0) {
-                output += result.arrayOfSteps.get(0).getIntegralPartialDividend();
-            } else {
-                for (int i = 0; i < result.countDigitsInProduct(0) - result.countDigitsInRemainder(0); i++) {
-                    output += " ";
-                }
-                output += result.arrayOfSteps.get(0).getIntegralPartialDividend();
-            }
-        }
-    }
-
     private void concatenateIfIntegralPartialDividendZero() {
         result.setPositionsBeforProduct(result.getPositionsBeforProduct() + result.countDigitsInProduct(0)
                 - result.countDigitsInRemainder(0) + 1);
@@ -183,5 +140,20 @@ public class ClassicFormatter implements Formatter {
             output += " ";
         }
         output += result.arrayOfSteps.get(0).getRemainder();
+    }
+
+    @Override
+    protected String concatenateSpace() {
+        return " ";
+    }
+
+    @Override
+    protected String concatenateUnderscore() {
+        return "_";
+    }
+
+    @Override
+    protected String concatenateIntegralPartialDividend(int i) {
+        return Integer.toString(result.arrayOfSteps.get(0).getIntegralPartialDividend());
     }
 }
