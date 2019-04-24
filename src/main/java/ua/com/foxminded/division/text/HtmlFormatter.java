@@ -185,7 +185,7 @@ public class HtmlFormatter extends ConcatenationIntegralPartialDividend implemen
 
         for (int i = 0; i < tmpQuotientArr.size(); i++) {
             for (int j = 0; j < tmpQuotientArr.get(i).size(); j++) {
-                str += "<span \" onClick=\"changeColor(this.className)\" class=\"item step-" + i + "\">"
+                str += "<span class=\"item step-" + i + "\"onmouseover=\"mouseOver(this.className)\" onmouseout=\"mouseOut(this.className)\">"
                         + tmpQuotientArr.get(i).get(j) + "</span>";
             }
         }
