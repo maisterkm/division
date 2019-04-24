@@ -5,7 +5,7 @@ import java.util.Collections;
 
 import ua.com.foxminded.division.math.Result;
 
-public class HtmlFormatter extends ConcatenationIntegralPartialDividend implements Formatter {
+public class HtmlFormatter extends AbstractFormatter implements Formatter {
     private Result result;
     String output = "<html><title>Division</title>" + "<head><link rel=\"stylesheet\" href=\"styles.css\">"
             + "<script src=\"javascript.js\"></script>" + "</head>" + "<body>";

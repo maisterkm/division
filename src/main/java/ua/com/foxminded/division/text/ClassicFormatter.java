@@ -2,7 +2,7 @@ package ua.com.foxminded.division.text;
 
 import ua.com.foxminded.division.math.Result;
 
-public class ClassicFormatter extends ConcatenationIntegralPartialDividend implements Formatter {
+public class ClassicFormatter extends AbstractFormatter implements Formatter {
     private Result result;
     private String output = "";
 

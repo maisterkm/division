@@ -2,7 +2,7 @@ package ua.com.foxminded.division.text;
 
 import ua.com.foxminded.division.math.Result;
 
-public abstract class ConcatenationIntegralPartialDividend {
+public abstract class AbstractFormatter {
     protected abstract String concatenateSpace();
     protected abstract String concatenateUnderscore();
     protected abstract String concatenateIntegralPartialDividend(int i);
