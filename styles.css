@@ -1,0 +1,13 @@
+span.item {
+	display: inline-block;
+	/* border: 1px solid green; */
+	text-align: center;
+	height: 15px;
+	width: 12px;
+	margin: 1px;
+	color: black;
+}
+
+span.quotient:hover {
+	color: red;
+}
